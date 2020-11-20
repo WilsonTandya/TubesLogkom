@@ -8,12 +8,12 @@ shop :- asserta(isShop),
 gacha :- 
   isShop, 
   random(1, 101, X),
-  (X < 31 -> write('You got a '),  write('Potion'), write(X), nl)
-  ->fail; (30 < X, X < 61 , write('You got a '),  write('Uncommon'), write(X), nl)
-  ->fail; (60 < X, X < 81 , write('You got a '),  write('Rare'), write(X), nl)
-  ->fail; (80 < X, X < 94 , write('You got a '),  write('Enchanted'), write(X), nl)
-  ->fail; (93 < X, X < 99 , write('You got a '),  write('Epic'), write(X), nl)
-  ->fail; (98 < X, X < 101 , write('You got a '),  write('Ultimate'), write(X), nl).
+  (X < 31 -> write('You got a '),  write('Potion'), write(X), nl
+  ; 30 < X, X < 61 -> write('You got a '),  write('Uncommon'), write(X), nl
+  ; 60 < X, X < 81 -> write('You got a '),  write('Rare'), write(X), nl
+  ; 80 < X, X < 94 -> write('You got a '),  write('Enchanted'), write(X), nl
+  ; 93 < X, X < 99 -> write('You got a '),  write('Epic'), write(X), nl
+  ; 98 < X, X < 101 -> write('You got a '),  write('Ultimate'), write(X), nl).
 
 gacha :-
   \+isShop,
