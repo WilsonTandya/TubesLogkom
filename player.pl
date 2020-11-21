@@ -5,11 +5,25 @@
 :- discontiguous(invent/1).
 :- discontiguous(delFromInvent/1).
 
+showFreq([]).
+showFreq([X|Y]) :- milik(X,Z),!, Z>0, write(X), write(' '), write(Z), nl, showFreq(Y). 
+
+
 isMilik(Item) :-
     milik(Item,X),
     X > 0.
 
-itemCounter(Item) :-
+
+
+showInvent :-
+    invent(Inven),
+    sort(Inven,NI),
+    showFreq(NI).
+
+itemCounter(Item,X) :-
+    milik(Item,X), !.
+
+showItemCounter(Item) :-
     milik(Item,X),!,
     write('Anda mempunyai sebanyak '),write(X),write(' '), write(Item). 
 
@@ -23,8 +37,7 @@ addToInvent(Item) :-
     X1 is X+1, asserta(milik(Item,X1))).
 
 delFromInvent(Item) :-
-    isMilik(Item),
-    milik(Item,X),!,
+    milik(Item,X),X >0,!,
     retract(milik(Item,X)).
 
 invent(Inven) :-
