@@ -13,10 +13,13 @@ itemCounter(Item) :-
     milik(Item,X),!,
     write('Anda mempunyai sebanyak '),write(X),write(' '), write(Item). 
 
+inventCounter(X) :-
+    invent(Inven),
+    length(Inven,X).
+
 addToInvent(Item) :-
     milik(Item,X),!,
-    invent(Inven),
-    (length(Inven,Y), Y =:= 100 -> write('Inventory Anda penuh! Item gagal ditambah ke inventory');
+    (inventCounter(Y), Y =:= 100 -> write('Inventory Anda penuh! Item gagal ditambah ke inventory');
     X1 is X+1, asserta(milik(Item,X1))).
 
 delFromInvent(Item) :-
