@@ -18,15 +18,12 @@ mulai :- asserta(isMulai),
 
 borderatas(_,Y) :-
 	Y =:= 0,!.
-
 borderbawah(_,Y) :-
 	tinggipeta(T),
 	Ymax is T+1,
 	Y =:= Ymax,!.
-
 borderkiri(X,_) :-
 	X =:= 0,!.
-
 borderkanan(X,_) :-
 	lebarpeta(L),
 	Xmax is L+1,
@@ -49,6 +46,7 @@ printpeta(X,Y) :-
 	dungeon(X,Y), !, write('D').
 printpeta(X,Y) :-
 	store(X,Y), !, write('S').
+/*Print sisa peta*/
 printpeta(_,_) :-
 	write('-').
 
@@ -64,11 +62,8 @@ map:-
 	Ymax is T+1,
 	forall(between(Y, Ymax, J), (
 		forall(between(X, Xmax, I), (
-			printpeta(I,J)
-		)),
-		nl
-	)),
-	write(' Legends:'), nl,
+			printpeta(I,J))),nl)),
+	write(' Legenda:'), nl,
 	write('    P = Player'), nl,
 	write('    Q = Quest'), nl,
 	write('    D = Dungeon'), nl,
