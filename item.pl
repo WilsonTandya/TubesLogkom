@@ -118,6 +118,8 @@ spawn_item :-
     asserta(item(54, pendant, ultimate, 400)),
     asserta(item(55, potion, health, 100)).
 
+/*spawnMilik digunakan untuk inisiasi kepunyaan player, semuanya 0 pada awalnya, parameter pertama merupakan
+ID item, parameter kedua banyaknya item*/
 spawnMilik :-
     asserta(milik(1, 0)),
     asserta(milik(2, 0)),
