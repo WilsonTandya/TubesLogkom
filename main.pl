@@ -2,7 +2,7 @@
 :- include('walk.pl').
 :- include('status.pl').
 :- include('player.pl').
-
+:- include('map.pl').
 :- dynamic(isPlay/0).
 
 start :-

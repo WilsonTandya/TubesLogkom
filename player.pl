@@ -102,7 +102,7 @@ showFreq([]).
 showFreq([X|Y]) :- milik(X,Z),!, Z>0, item(X, A,B,_),write(Z), write(' '), (
     (B == common -> write('Common ');
     B == uncommon -> write('Uncommon ');
-    B == rare -> write('Rare');
+    B == rare -> write('Rare ');
     B == enchanted -> write('Enchanted ');
     B == epic -> write('Epic ');
     B == ultimate -> write('Ultimate ');
@@ -119,13 +119,16 @@ showFreq([X|Y]) :- milik(X,Z),!, Z>0, item(X, A,B,_),write(Z), write(' '), (
     A == pendant -> write('Pendant'))   
 ), nl, showFreq(Y). 
 
+/* counter list of item*/
+counter([],0).
+counter([X|Y],Z) :- milik(X,A), counter(Y,B), Z is A+B.
+
 /* Nunjukin kepunyaan player, ditandai dengan banyaknya item yang dimiliki minimal 1*/
 isMilik(Item) :-
     milik(Item,X),
     X > 0.
 
 /* Nampilin inventory ke layar tapi disort dulu sesuai ID, nampilinnya pake print list of freq item*/
-/* disort dulu biar item duplikasi ilang juga */
 showInvent :-
     invent(Inven),
     sort(Inven,NI),
@@ -143,17 +146,17 @@ showItemCounter(Item) :-
 /* ngitung banyaknya item di inventory */
 inventCounter(X) :-
     invent(Inven),
-    length(Inven,X).
+    counter(Inven,X).
 
-/* add dan del sengaja ditambahin/dikurangin doang gak ditimpa (diupdate) biar gampang ngitung banyak itemnya */
+/* UPDATE : biar gampang dipahami, algoritmanya diubah dikit, kepunyaannya diupdate tiap add/delete */
 addToInvent(Item) :-
     milik(Item,X),!,
     (inventCounter(Y), Y =:= 100 -> write('Inventory Anda penuh! Item gagal ditambah ke inventory');
-    X1 is X+1 ,asserta(milik(Item,X1))).
+    X1 is X+1 ,retract(milik(Item,X)),asserta(milik(Item,X1))).
 
 delFromInvent(Item) :-
     milik(Item,X),
-    (X > 0 -> retract(milik(Item,X));
+    (X > 0 -> X1 is X - 1,retract(milik(Item,X)), asserta(milik(Item,X1));
     write('Anda tidak mempunyai item tersebut!'), nl)
     .
 /* nah kalau ini untuk tiap item kepunyaan X dimasukin ke inventory yang namanya Inven*/
