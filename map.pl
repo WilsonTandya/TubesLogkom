@@ -54,8 +54,6 @@ map :-
   write('You must start the game first!'), nl, !.
 
 map:-
-	asserta(isMulai),
-	asserta(player(3,2)),
 	asserta(quest(5,10)),
 	asserta(dungeon(13,13)),
 	asserta(store(12,4)),

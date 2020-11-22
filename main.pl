@@ -9,6 +9,7 @@ start :-
     \+(isPlay),
     spawnItem,
     playerInit,
+    asserta(player(3,2)),
     asserta(isPlay),!.
 
 start :-
