@@ -48,14 +48,28 @@ start :-
     write('#                                                                              #'),nl,
     write('# 1. start  : Untuk Mulai Permainan                                            #'),nl,
     write('# 2. map    : Menampilkan Peta                                                 #'),nl,
-    write('# 3. status : Menampilkan Kondisi                                              #'),nl,
+    write('# 3. status : Menampilkan Status Pemain                                        #'),nl,
     write('# 4. w      : Bergerak ke Utara 1 Langkah                                      #'),nl,
     write('# 5. a      : Bergerak ke Barat 1 Langkah                                      #'),nl,
     write('# 6. s      : Bergerak ke Selatan 1 Langkah                                    #'),nl,
     write('# 7. d      : Bergerak ke Timur 1 Langkah                                      #'),nl,
-    write('# 8. Status : Menampilkan Status Pemain                                        #'),nl,
-    write('# 9. help   : Menampilkan Segala Bantuan                                       #'),nl,
-    write('################################################################################'),nl,nl,
+    write('# 8. help   : Menampilkan Segala Bantuan                                       #'),nl,
+    write('################################################################################'),nl,nl.
 
 
-    write('Game telah distart! Silahkan keluar dan mulai game baru'), nl.
+    write('Game telah dimulai!'), nl.
+
+help:-
+    isPlay,
+    write('################################################################################'),nl,
+    write('#                              ~Bensin Impact~                                 #'),nl,
+    write('#                                                                              #'),nl,
+    write('# 1. start  : Untuk Mulai Permainan                                            #'),nl,
+    write('# 2. map    : Menampilkan Peta                                                 #'),nl,
+    write('# 3. status : Menampilkan Status Pemain                                        #'),nl,
+    write('# 4. w      : Bergerak ke Utara 1 Langkah                                      #'),nl,
+    write('# 5. a      : Bergerak ke Barat 1 Langkah                                      #'),nl,
+    write('# 6. s      : Bergerak ke Selatan 1 Langkah                                    #'),nl,
+    write('# 7. d      : Bergerak ke Timur 1 Langkah                                      #'),nl,
+    write('# 8. help   : Menampilkan Segala Bantuan                                       #'),nl,
+    write('################################################################################'),nl,nl.
