@@ -72,7 +72,7 @@ statInit(X) :-
     write('Base Deff \t: '), baseDef(X,A), write(A), nl, !.
 
 /* Inisiasi job karakter awal player (job) */
-playerInit :- 
+playerInit :-
     nl,
     write('Pilihan job yang tersedia :'), nl,
     statInit(swordman),nl,
@@ -116,8 +116,8 @@ showFreq([X|Y]) :- milik(X,Z),!, Z>0, item(X, A,B,_),write(Z), write(' '), (
     A == robe -> write('Robe');
     A == ring -> write('Ring');
     A == bracelet -> write('Bracelet');
-    A == pendant -> write('Pendant'))   
-), nl, showFreq(Y). 
+    A == pendant -> write('Pendant'))
+), nl, showFreq(Y).
 
 /* counter list of item*/
 counter([],0).
@@ -129,7 +129,7 @@ isMilik(Item) :-
     X > 0.
 
 /* Nampilin inventory ke layar tapi disort dulu sesuai ID, nampilinnya pake print list of freq item*/
-showInvent :-
+inventory :-
     invent(Inven),
     sort(Inven,NI),
     showFreq(NI).
@@ -141,7 +141,7 @@ itemCounter(Item,X) :-
 /* nampilin banyak item yang dipunyai */
 showItemCounter(Item) :-
     milik(Item,X),!,
-    write('Anda mempunyai sebanyak '),write(X),write(' '), write(Item). 
+    write('Anda mempunyai sebanyak '),write(X),write(' '), write(Item).
 
 /* ngitung banyaknya item di inventory */
 inventCounter(X) :-
