@@ -77,7 +77,7 @@ playerInit :-
     write('Pilihan job yang tersedia :'), nl,
     statInit(swordman),nl,
     statInit(archer),nl,
-    statInit(sorcerer), !,
+    statInit(sorcerer), !, nl,
     write('Silahkan pilih menggunakan perintah pilih(job) dengan huruf kecil semua').
 
 /*kalau belum dikasih starter pack, boleh dikasih*/
