@@ -1,5 +1,3 @@
-:- dynamic(lebarpeta/1).
-:- dynamic(tinggipeta/1).
 :- dynamic(quest/2).
 :- dynamic(dungeon/2).
 :- dynamic(store/2).
