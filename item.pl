@@ -52,9 +52,11 @@ spawn_milik :-
 /* item -> id, jenis, rarity, damage/def/hp/potion(+) */
 
 :- dynamic(item/4).
+:- dynamic(milik/2).
 
 :- discontiguous(spawnItem/0).
 :- discontiguous(spawn_item/0).
+:- discontiguous(spawnMilik/0).
 
 spawnItem :-
     spawn_item.
@@ -115,3 +117,62 @@ spawn_item :-
     asserta(item(53, bracelet, ultimate, 400)),
     asserta(item(54, pendant, ultimate, 400)),
     asserta(item(55, potion, health, 100)).
+
+/*spawnMilik digunakan untuk inisiasi kepunyaan player, semuanya 0 pada awalnya, parameter pertama merupakan
+ID item, parameter kedua banyaknya item*/
+spawnMilik :-
+    asserta(milik(1, 0)),
+    asserta(milik(2, 0)),
+    asserta(milik(3, 0)),
+    asserta(milik(4, 0)),
+    asserta(milik(5, 0)),
+    asserta(milik(6, 0)),
+    asserta(milik(7, 0)),
+    asserta(milik(8, 0)),
+    asserta(milik(9, 0)),
+    asserta(milik(10, 0)),
+    asserta(milik(11, 0)),
+    asserta(milik(12, 0)),
+    asserta(milik(13, 0)),
+    asserta(milik(14, 0)),
+    asserta(milik(15, 0)),
+    asserta(milik(16, 0)),
+    asserta(milik(17, 0)),
+    asserta(milik(18, 0)),
+    asserta(milik(19, 0)),
+    asserta(milik(20, 0)),
+    asserta(milik(21, 0)),
+    asserta(milik(22, 0)),
+    asserta(milik(23, 0)),
+    asserta(milik(24, 0)),
+    asserta(milik(25, 0)),
+    asserta(milik(26, 0)),
+    asserta(milik(27, 0)),
+    asserta(milik(28, 0)),
+    asserta(milik(29, 0)),
+    asserta(milik(30, 0)),
+    asserta(milik(31, 0)),
+    asserta(milik(32, 0)),
+    asserta(milik(33, 0)),
+    asserta(milik(34, 0)),
+    asserta(milik(35, 0)),
+    asserta(milik(36, 0)),
+    asserta(milik(37, 0)),
+    asserta(milik(38, 0)),
+    asserta(milik(39, 0)),
+    asserta(milik(40, 0)),
+    asserta(milik(41, 0)),
+    asserta(milik(42, 0)),
+    asserta(milik(43, 0)),
+    asserta(milik(44, 0)),
+    asserta(milik(45, 0)),
+    asserta(milik(46, 0)),
+    asserta(milik(47, 0)),
+    asserta(milik(48, 0)),
+    asserta(milik(49, 0)),
+    asserta(milik(50, 0)),
+    asserta(milik(51, 0)),
+    asserta(milik(52, 0)),
+    asserta(milik(53, 0)),
+    asserta(milik(54, 0)),
+    asserta(milik(55, 0)).
