@@ -9,6 +9,9 @@ https://docs.google.com/document/d/1eL9yfTXk9H2mdM5zvAeK3Drytbpco110TgdNWnlsGsU/
 ## Format penamaan .zip
 IF2121_K01_G04.zip
 
+## Laporan
+https://docs.google.com/document/d/1ZbUMFj7zXgxj5PUrhKACVv1kyoxrrcljIKxqb_KSy58/edit# <br />
+
 ## Timeline
 ### Senin, 23 November 2020
 > Source code program yang minimal berisi: <br />
