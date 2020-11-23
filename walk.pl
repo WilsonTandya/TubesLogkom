@@ -3,6 +3,14 @@ w :-
   write('You must start the game first!'), nl, !.
 
 w :-
+  \+jobIsSelected,
+  write('You must choose your job first!'), nl, !.
+
+w :-
+  isShop,
+  write('You must exitShop. first!'), nl, !.
+
+w :-
   isPlay, player(_, Y),
   Y =:= 1,
   write('You cant move forward! there is an obstacle in front of you'), nl, !.
@@ -22,6 +30,14 @@ w :-
 a :-
   \+isPlay,
   write('You must start the game first!'), nl, !.
+
+a :-
+  \+jobIsSelected,
+  write('You must choose your job first!'), nl, !.
+
+a :-
+  isShop,
+  write('You must exitShop. first!'), nl, !.
 
 a :-
   isPlay, player(X, _),
@@ -45,6 +61,14 @@ s :-
   write('You must start the game first!'), nl, !.
 
 s :-
+  \+jobIsSelected,
+  write('You must choose your job first!'), nl, !.
+
+s :-
+  isShop,
+  write('You must exitShop. first!'), nl, !.
+
+s :-
   isPlay, player(_, Y),
   Y =:= 15,
   write('You cant move backward! there is an obstacle behind you'), nl, !.
@@ -64,6 +88,14 @@ s :-
 d :-
   \+isPlay,
   write('You must start the game first!'), nl, !.
+
+d :-
+  \+jobIsSelected,
+  write('You must choose your job first!'), nl, !.
+
+d :-
+  isShop,
+  write('You must exitShop. first!'), nl, !.
 
 d :-
   isPlay, player(X, _),
