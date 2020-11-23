@@ -1,4 +1,4 @@
-:- include('shop.pl').
+
 :- include('walk.pl').
 :- include('status.pl').
 :- include('player.pl').
@@ -7,6 +7,7 @@
 
 start :-
     \+(isPlay),
+    spawnMilik,
     spawnItem,
     playerInit,
     asserta(player(3,2)),
@@ -57,7 +58,7 @@ start :-
     write('# 8.  d           : Bergerak ke Timur 1 Langkah                                #'),nl,
     write('# 9.  help        : Menampilkan Segala Bantuan                                 #'),nl,
     write('# 10. quit        : Keluar dari Permainan                                      #'),nl,
-    write('################################################################################'),nl,nl.
+    write('################################################################################'),nl,nl,
 
 
     write('Game telah dimulai!'), nl.

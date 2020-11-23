@@ -2,7 +2,7 @@
 /*jobIsSelected menandakan player sudah memilih job atau belum, kalau sudah maka player tidak bisa memilih job lagi
 kecuali keluar dan restart game*/
 /*isStarterPack menandakan player sudah dikasih starter pack atau belum, biar gak bisa dikasih lagi */
-:- include('item.pl').
+:- include('shop.pl').
 :- dynamic(jobIsSelected/0).
 :- dynamic(job/1).
 :- dynamic(isStarterPack/0).
@@ -83,13 +83,15 @@ playerInit :-
 /*kalau belum dikasih starter pack, boleh dikasih*/
 starterPack :-
     \+(isStarterPack),
-    asserta(milik(55,1)),
-    asserta(milik(55,2)),
+    retractall(milik(55,_)),
     asserta(milik(55,3)),
     job(X),
-    (X == swordman -> asserta(milik(1,1)), asserta(milik(4,1)),asserta(milik(7,1))
-    ; X == archer -> asserta(milik(2,1)), asserta(milik(5,1)),asserta(milik(8,1))
-    ; asserta(milik(3,1)), asserta(milik(6,1)),asserta(milik(9,1))),
+    (X == swordman -> retractall(milik(1,_)), retractall(milik(4,_)), retractall(milik(7,_))
+    ,asserta(milik(1,1)), asserta(milik(4,1)),asserta(milik(7,1))
+    ; X == archer -> retractall(milik(2,_)), retractall(milik(5,_)), retractall(milik(8,_))
+    ,asserta(milik(2,1)), asserta(milik(5,1)),asserta(milik(8,1))
+    ;retractall(milik(3,_)), retractall(milik(6,_)), retractall(milik(9,_))
+    , asserta(milik(3,1)), asserta(milik(6,1)),asserta(milik(9,1))),
     asserta(isStarterPack).
 
 /* kalau udah mah jangan */
@@ -99,7 +101,7 @@ starterPack :-
 
 /* ngeprint list of frequency item */
 showFreq([]).
-showFreq([X|Y]) :- milik(X,Z),!, Z>0, item(X, A,B,_),write(Z), write(' '), (
+showFreq([X|Y]) :- milik(X,Z), !, item(X, A,B,_),write(Z), write(' '), (
     (B == common -> write('Common ');
     B == uncommon -> write('Uncommon ');
     B == rare -> write('Rare ');
@@ -150,13 +152,13 @@ inventCounter(X) :-
 
 /* UPDATE : biar gampang dipahami, algoritmanya diubah dikit, kepunyaannya diupdate tiap add/delete */
 addToInvent(Item) :-
-    milik(Item,X),!,
+    milik(Item,X),
     (inventCounter(Y), Y =:= 100 -> write('Inventory Anda penuh! Item gagal ditambah ke inventory');
-    X1 is X+1 ,retract(milik(Item,X)),asserta(milik(Item,X1))).
+    X1 is X+1 ,retractall(milik(Item,_)),asserta(milik(Item,X1))).
 
 delFromInvent(Item) :-
     milik(Item,X),
-    (X > 0 -> X1 is X - 1,retract(milik(Item,X)), asserta(milik(Item,X1));
+    (X > 0 -> X1 is X - 1,retractall(milik(Item,_)), asserta(milik(Item,X1));
     write('Anda tidak mempunyai item tersebut!'), nl)
     .
 /* nah kalau ini untuk tiap item kepunyaan X dimasukin ke inventory yang namanya Inven*/
