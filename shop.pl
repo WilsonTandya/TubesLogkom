@@ -2,9 +2,9 @@
 
 :- dynamic(isShop/0).
 
-shop :- 
-  isPlay, asserta(isShop), 
-  write('What do you want to buy?'), nl, 
+shop :-
+  isPlay, asserta(isShop),
+  write('What do you want to buy? Type "gacha." or "potion."'), nl, 
   write('1. Gacha (500 gold)'), nl,
   write('2. Potion (100 gold)'), nl, !.
 
@@ -12,7 +12,7 @@ shop :-
   \+isPlay,
   write('You must start the game first!'), nl, !.
 
-gacha :- 
+gacha :-
   isPlay, isShop,
   random(1, 101, X), write('You got a '),
   (X < 31 -> !,item(55, B, C, _), addToInvent(55), write(C), write(' '), write(B), nl
@@ -30,8 +30,8 @@ gacha :-
   \+isShop,
   write('You must go to the shop first!'), nl, !.
 
-potion :- 
-  isShop, 
+potion :-
+  isShop,
   write('You got a potion'), addToInvent(55), nl, !.
 
 potion :-
@@ -40,7 +40,7 @@ potion :-
 
 exitShop :- retract(isShop), write('Thanks for coming.'), !.
 
-/* 
+/*
 Todo
 1. probabilitas
 2. ngecek di map apakah lagi posisi di shop

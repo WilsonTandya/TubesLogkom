@@ -79,7 +79,7 @@ map:-
 	forall(between(Y, Ymax, J), (
 		forall(between(X, Xmax, I), (
 			printpeta(I,J))),nl)),
-	write(' Legenda:'), nl,
+	write(' Legends:'), nl,
 	write('    P = Player'), nl,
 	write('    Q = Quest'), nl,
 	write('    D = Dungeon'), nl,
