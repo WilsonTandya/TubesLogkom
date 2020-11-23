@@ -3,14 +3,19 @@
 :- dynamic(isShop/0).
 
 shop :-
-  isPlay, asserta(isShop),
+  \+isPlay,
+  write('You must start the game first!'), nl, !.
+
+shop :-
+  isPlay, player(X, Y), X =\= 12, Y =\= 4,
+  write('You must go to the shop first!'), nl, !.
+
+shop :-
+  isPlay, 
+  asserta(isShop),
   write('What do you want to buy? Type "gacha." or "potion."'), nl, 
   write('1. Gacha (500 gold)'), nl,
   write('2. Potion (100 gold)'), nl, !.
-
-shop :-
-  \+isPlay,
-  write('You must start the game first!'), nl, !.
 
 gacha :-
   isPlay, isShop,
@@ -31,8 +36,8 @@ gacha :-
   write('You must go to the shop first!'), nl, !.
 
 potion :-
-  isShop,
-  write('You got a potion'), addToInvent(55), nl, !.
+  isShop, item(55, B, C, _),
+  write('You got a '), write(C), write(' '), write(B), addToInvent(55), nl, !.
 
 potion :-
   \+isShop,
