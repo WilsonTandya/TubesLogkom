@@ -234,24 +234,26 @@ equip(Item) :-
     \+isMilik(Item),
     write('Anda tidak memiliki item tersebut'), nl,!,fail.
 
+equipWeapon(Item) :-
+    \+isMilik(Item),
+    write('Anda tidak memiliki item tersebut'), nl, !, fail.
 
 equipWeapon(Item) :-
     \+isWeaponEquip, Item < 55,
     X is Item mod 9,
     job(Y),
     ((Y == swordman, X =\= 1; Y == archer, X =\= 2; Y == sorcerer, X=\= 3) -> write('Weapon yang digunakan tidak valid, equip gagal!')
-    ; asserta(weapon(Item)), milik(Item, Z), Z1 is Z-1, retract(milik(Item,Z)),
-    asserta(milik(Item,Z1)), asserta(isWeaponEquip)).
+    ; asserta(weapon(Item)), delFromInvent(Item), asserta(isWeaponEquip)).
 
 equipWeapon(Item) :-
     isWeaponEquip, Item < 55,
     X is Item mod 9,
     job(Y),
     ((Y == swordman, X =\= 1; Y == archer, X =\= 2; Y == sorcerer, X=\= 3) -> write('Weapon yang digunakan tidak valid, equip gagal!')
-    ; retract(weapon(A)),milik(A,B), B1 is B+1, retract(milik(A,B)), asserta(milik(A,B1))
-    ,asserta(weapon(Item)), milik(Item, Z), Z1 is Z-1, retract(milik(Item,Z)), asserta(milik(Item,Z1))).
+    ; retract(weapon(A)),delFromInvent(Item),addToInvent(A)
+    ,asserta(weapon(Item))).
 
-equipWeapon(Item) :-
+equipArmor(Item) :-
     \+isMilik(Item),
     write('Anda tidak memiliki item tersebut'), nl, !, fail.
 
@@ -260,18 +262,17 @@ equipArmor(Item) :-
     X is Item mod 9,
     job(Y),
     ((Y == swordman, X =\= 4; Y == archer, X =\= 5; Y == sorcerer, X=\= 6) -> write('Armor yang digunakan tidak valid, equip gagal!')
-    ; asserta(armor(Item)), milik(Item, Z), Z1 is Z-1, retract(milik(Item,Z)),
-    asserta(milik(Item,Z1)), asserta(isArmorEquip)).
+    ; asserta(armor(Item)), delFromInvent(Item), asserta(isArmorEquip)).
 
 equipArmor(Item) :-
     isArmorEquip, Item < 55,
     X is Item mod 9,
     job(Y),
     ((Y == swordman, X =\= 4; Y == archer, X =\= 5; Y == sorcerer, X=\= 6) -> write('Armor yang digunakan tidak valid, equip gagal!')
-    ; retract(armor(A)),milik(A,B), B1 is B+1, retract(milik(A,B)), asserta(milik(A,B1))
-    ,asserta(armor(Item)), milik(Item, Z), Z1 is Z-1, retract(milik(Item,Z)), asserta(milik(Item,Z1))).
+    ; retract(armor(A)), delFromInvent(Item), addToInvent(A)
+    ,asserta(armor(Item))).
 
-equipArmor(Item) :-
+equipAccessory(Item) :-
     \+isMilik(Item),
     write('Anda tidak memiliki item tersebut'), nl, !, fail.
 
@@ -280,20 +281,15 @@ equipAccessory(Item) :-
     X is Item mod 9,
     job(Y),
     ((Y == swordman, X =\= 7; Y == archer, X =\= 8; Y == sorcerer, X=\= 0) -> write('Accessory yang digunakan tidak valid, equip gagal!')
-    ; asserta(accessory(Item)), milik(Item, Z), Z1 is Z-1, retract(milik(Item,Z)),
-    asserta(milik(Item,Z1)), asserta(isAccessoryEquip)).
+    ; asserta(accessory(Item)), delFromInvent(Item), asserta(isAccessoryEquip)).
 
 equipAccessory(Item) :-
     isAccessoryEquip, Item < 55,
     X is Item mod 9,
     job(Y),
     ((Y == swordman, X =\= 7; Y == archer, X =\= 8; Y == sorcerer, X=\= 0) -> write('Accessory yang digunakan tidak valid, equip gagal!')
-    ; retract(accessory(A)),milik(A,B), B1 is B+1, retract(milik(A,B)), asserta(milik(A,B1))
-    ,asserta(accessory(Item)), milik(Item, Z), Z1 is Z-1, retract(milik(Item,Z)), asserta(milik(Item,Z1))).
-
-equipAccessory(Item) :-
-    \+isMilik(Item),
-    write('Anda tidak memiliki item tersebut'), nl, !, fail.
+    ; retract(accessory(A)), delFromInvent(Item),addToInvent(A)
+    ,asserta(accessory(Item))).
 
 
 unequipArmor :-
@@ -301,24 +297,30 @@ unequipArmor :-
     write('Tidak ada item di slot armor!'),nl,!,fail.
 
 unequipArmor :-
-    isArmorEquip,
-    armor(X), milik(X,Y), Y1 is Y+1, retract(armor(X)),
-    retract(milik(X,Y)), asserta(milik(X,Y1)), retract(isArmorEquip), write('Armor dilepas, item kembali ke inventory!'), nl.
+    isArmorEquip, write('Armor dilepas!'),nl,
+    armor(X), retract(armor(X)), 
+    milik(X,Y), addToInvent(X),
+    (milik(X,Y1), Y1 =\= Y -> write('Item dikembalikan ke inventory');write(''))
+    ,retract(isArmorEquip), nl.
 
 unequipWeapon :-
     \+isWeaponEquip,
     write('Tidak ada item di slot weapon!'),nl,!,fail.
 
 unequipWeapon :-
-    isWeaponEquip,
-    weapon(X), milik(X,Y), Y1 is Y+1, retract(weapon(X)),
-    retract(milik(X,Y)), asserta(milik(X,Y1)), retract(isWeaponEquip), write('Weapon dilepas, item kembali ke inventory!'), nl.
+    isWeaponEquip, write('Weapon dilepas!'), nl,
+    weapon(X), retract(weapon(X)),
+    milik(X,Y), addToInvent(X),
+    (milik(X,Y1), Y1 =\= Y -> write('Item dikembalikan ke inventory');write(''))
+    ,retract(isWeaponEquip),nl.
 
 unequipAccessory :-
     \+isAccessoryEquip,
     write('Tidak ada item di slot accessory!'),nl,!,fail.
 
 unequipAccessory :-
-    isAccessoryEquip,
-    accessory(X), milik(X,Y), Y1 is Y+1, retract(accessory(X)),
-    retract(milik(X,Y)), asserta(milik(X,Y1)), retract(isAccessoryEquip), write('Accessory dilepas, item kembali ke inventory!'), nl.
+    isAccessoryEquip, write('Accessory dilepas!'), nl,
+    accessory(X), retract(accessory(X)),
+    milik(X,Y), addToInvent(X),
+    (milik(X,Y1), Y1 =\= Y -> write('Item dikembalikan ke inventory');write(''))
+    ,retract(isAccessoryEquip),nl.
