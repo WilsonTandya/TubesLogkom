@@ -233,9 +233,9 @@ levelUp(Player,Exp) :-
         FinalExp is NewExp mod 100,
         retractall(exp(Player,_)),
         asserta(exp(Player,FinalExp)),
-        write('Congratulations, you leveld up!'),
+        write('Congratulations, you leveled up!'),
         write('You are now level '),
-        write(level)
+        write(NewLevel)
         ;
         retractall(exp(Player,_)),
         asserta(exp(Player,NewExp))
