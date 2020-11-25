@@ -13,17 +13,17 @@ w :-
 w :-
   isPlay, player(_, Y),
   Y =:= 1,
-  write('You cant move forward! there is an obstacle in front of you'), nl, !.
+  write('You cant move north! there is an obstacle infront of you'), nl, !.
 
 w :-
   isPlay, player(X, Y), obstacle(X, Z),
   Y-1 =:= Z,
-  write('You cant move forward! there is an obstacle in front of you'), nl, !.
+  write('You cant move north! there is an obstacle infront of you'), nl, !.
 
-w :-  
+w :-
   isPlay, retract(player(X,Y)),
 	NewY is Y - 1,
-	write('You move forward'), nl,
+	write('You move north'), nl,
 	asserta(player(X, NewY)),
 	!.
 
@@ -49,11 +49,11 @@ a :-
   X-1 =:= Z,
   write('You cant move west! there is an obstacle on your left'), nl, !.
 
-a :- 
+a :-
   isPlay, retract(player(X,Y)),
 	NewX is X - 1,
 	write('You move west'), nl,
-	asserta(player(NewX, Y)), 
+	asserta(player(NewX, Y)),
 	!.
 
 s :-
@@ -71,17 +71,17 @@ s :-
 s :-
   isPlay, player(_, Y),
   Y =:= 15,
-  write('You cant move backward! there is an obstacle behind you'), nl, !.
+  write('You cant move south! there is an obstacle behind you'), nl, !.
 
 s :-
   isPlay, player(X, Y), obstacle(X, Z),
   Y+1 =:= Z,
-  write('You cant move backward! there is an obstacle behind you'), nl, !.
+  write('You cant move south! there is an obstacle behind you'), nl, !.
 
-s :- 
+s :-
   isPlay, retract(player(X,Y)),
 	NewY is Y + 1,
-	write('You move backward'), nl,
+	write('You move south'), nl,
 	asserta(player(X, NewY)),
 	!.
 
@@ -107,9 +107,9 @@ d :-
   X+1 =:= Z,
   write('You cant move east! there is an obstacle on your right'), nl, !.
 
-d :- 
+d :-
   isPlay, retract(player(X,Y)),
 	NewX is X + 1,
 	write('You move east'), nl,
-	asserta(player(NewX, Y)), 
+	asserta(player(NewX, Y)),
 	!.

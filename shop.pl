@@ -7,9 +7,9 @@ shop :-
   write('You must start the game first!'), nl, !.
 
 shop :-
-  isPlay, player(X, Y), 
-  (X =:= 12, Y =:= 4 -> !, asserta(isShop), 
-  write('What do you want to buy? Type "gacha." or "potion."'), nl, 
+  isPlay, player(X, Y),
+  (X =:= 12, Y =:= 4 -> !, asserta(isShop),
+  write('What do you want to buy? Type "gacha." or "potion."'), nl,
   write('1. Gacha (500 gold)'), nl,
   write('2. Potion (100 gold)'), nl
   ; !, write('You must go to the shop first!'), nl).

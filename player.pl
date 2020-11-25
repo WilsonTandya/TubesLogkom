@@ -30,7 +30,7 @@ maxHP(X) :-
     job(Z),
     baseHP(Z,X,Y),!.
 
-maxHP(X) :- 
+maxHP(X) :-
     currentLevel(Y),
     job(Z),
     baseHP(Z,A,Y),
@@ -44,7 +44,7 @@ currAtt(X) :-
     job(Z),
     baseAtt(Z,X,Y),!.
 
-currAtt(X) :- 
+currAtt(X) :-
     currentLevel(Y),
     job(Z),
     baseAtt(Z,A,Y),
@@ -58,7 +58,7 @@ currDef(X) :-
     job(Z),
     baseDef(Z,X,Y),!.
 
-currDef(X) :- 
+currDef(X) :-
     currentLevel(Y),
     job(Z),
     baseDef(Z,A,Y),
@@ -70,7 +70,7 @@ currDef(X) :-
 baseHP(X,Y,Level) :-
     isJob(X),
     Z is Level - 1,
-    (X == swordman -> Y is 500 + 50*Z 
+    (X == swordman -> Y is 500 + 50*Z
     ; X == archer -> Y is 300 + 30*Z
     ; Y is 200 + 20*Z).
 
@@ -89,27 +89,27 @@ baseDef(X,Y,Level) :-
     ; Y is 5+Z).
 
 /* command untuk memilih job  */
-pilih(X) :-
+choose(X) :-
     \+(jobIsSelected),
     isJob(X),
-    write('Selamat, Anda telah menjadi '),
+    write('Congratulations, You become a(n) '),
     (X == swordman -> write('Swordman!')
     ; X == archer -> write('Archer!')
-    ; write('Sorcerer')), nl,
+    ; write('Sorcerer!')), nl,
     asserta(job(X)),
     asserta(jobIsSelected),
     asserta(currentLevel(1)),
     starterPack,!.
 /* Jika pilihan bukan dari 3 yang disediakan, perintah gagal*/
-pilih(_) :-
+choose(_) :-
     \+(jobIsSelected),
-    write('Pilihan job hanya 3, tolong ulangi pemilihan lagi'),!.
+    write('There are only 3 jobs, please enter the correct input'),!.
 
 /* Jika sebelumnya sudah memilih, player tidak bisa memilih lagi*/
-pilih(_) :-
+choose(_) :-
     jobIsSelected,
-    write('Anda telah memilih job!'), nl,
-    write('Anda adalah '), job(X),
+    write('You have chosen a job'), nl,
+    write('You are a(n) '), job(X),
     (X == swordman -> write('Swordman')
     ; X == archer -> write('Archer')
     ; write('Sorcerer')), nl.
@@ -127,11 +127,11 @@ statInit(X) :-
 /* Inisiasi job karakter awal player (job) */
 playerInit :-
     nl,
-    write('Pilihan job yang tersedia :'), nl,
+    write('Available jobs :'), nl,
     statInit(swordman),nl,
     statInit(archer),nl,
     statInit(sorcerer), !, nl,
-    write('Silahkan pilih menggunakan perintah pilih(job) dengan huruf kecil semua').
+    write('Please choose your job by typing "choose(swordman).", "choose(archer).", or choose("sorcerer").').
 
 /*kalau belum dikasih starter pack, boleh dikasih*/
 starterPack :-
@@ -150,7 +150,7 @@ starterPack :-
 /* kalau udah mah jangan */
 starterPack :-
     isStarterPack,
-    write('Starter pack telah diberikan!'), nl.
+    write('Starter pack has been given!'), nl.
 
 /* ngeprint list of frequency item */
 showFreq([]).
@@ -197,7 +197,7 @@ itemCounter(Item,X) :-
 /* nampilin banyak item yang dipunyai */
 showItemCounter(Item) :-
     milik(Item,X),!,
-    write('Anda mempunyai sebanyak '),write(X),write(' '), write(Item).
+    write('You got '),write(X),write(' '), write(Item).
 
 /* ngitung banyaknya item di inventory */
 inventCounter(X) :-
@@ -207,13 +207,13 @@ inventCounter(X) :-
 /* UPDATE : biar gampang dipahami, algoritmanya diubah dikit, kepunyaannya diupdate tiap add/delete */
 addToInvent(Item) :-
     milik(Item,X),
-    (inventCounter(Y), Y =:= 100 -> write('Inventory Anda penuh! Item gagal ditambah ke inventory');
+    (inventCounter(Y), Y =:= 100 -> write('Your Inventory is Full! Item Failed to Get Added to Your inventory');
     X1 is X+1 ,retractall(milik(Item,_)),asserta(milik(Item,X1))).
 
 delFromInvent(Item) :-
     milik(Item,X),
     (X > 0 -> X1 is X - 1,retractall(milik(Item,_)), asserta(milik(Item,X1));
-    write('Anda tidak mempunyai item tersebut!'), nl)
+    write('You dont have that item!'), nl)
     .
 /* nah kalau ini untuk tiap item kepunyaan X dimasukin ke inventory yang namanya Inven*/
 invent(Inven) :-
@@ -228,99 +228,114 @@ equip(Item) :-
     equipAccessory(Item)),!.
 
 equip(Item) :-
-    Item =:= 55, write('Potion tidak dapat diequip'),nl,!,fail.
+    Item =:= 55, write('Potion cant be equipped'),nl,!,fail.
 
 equip(Item) :-
     \+isMilik(Item),
-    write('Anda tidak memiliki item tersebut'), nl,!,fail.
+    write('You dont have that item!'), nl,!,fail.
 
 equipWeapon(Item) :-
     \+isMilik(Item),
-    write('Anda tidak memiliki item tersebut'), nl, !, fail.
+    write('You dont have that item!'), nl, !, fail.
 
 equipWeapon(Item) :-
     \+isWeaponEquip, Item < 55,
     X is Item mod 9,
     job(Y),
-    ((Y == swordman, X =\= 1; Y == archer, X =\= 2; Y == sorcerer, X=\= 3) -> write('Weapon yang digunakan tidak valid, equip gagal!')
+    ((Y == swordman, X =\= 1; Y == archer, X =\= 2; Y == sorcerer, X=\= 3) -> write('Weapon isnt valid, fail to equip!')
     ; asserta(weapon(Item)), delFromInvent(Item), asserta(isWeaponEquip)).
 
 equipWeapon(Item) :-
     isWeaponEquip, Item < 55,
     X is Item mod 9,
     job(Y),
-    ((Y == swordman, X =\= 1; Y == archer, X =\= 2; Y == sorcerer, X=\= 3) -> write('Weapon yang digunakan tidak valid, equip gagal!')
+    ((Y == swordman, X =\= 1; Y == archer, X =\= 2; Y == sorcerer, X=\= 3) -> write('Weapon isnt valid, fail to equip!')
     ; retract(weapon(A)),delFromInvent(Item),addToInvent(A)
     ,asserta(weapon(Item))).
 
 equipArmor(Item) :-
     \+isMilik(Item),
-    write('Anda tidak memiliki item tersebut'), nl, !, fail.
+    write('You dont have that item!'), nl, !, fail.
 
 equipArmor(Item) :-
     \+isArmorEquip, Item < 55,
     X is Item mod 9,
     job(Y),
-    ((Y == swordman, X =\= 4; Y == archer, X =\= 5; Y == sorcerer, X=\= 6) -> write('Armor yang digunakan tidak valid, equip gagal!')
+    ((Y == swordman, X =\= 4; Y == archer, X =\= 5; Y == sorcerer, X=\= 6) -> write('Armor isnt valid, fail to equip!')
     ; asserta(armor(Item)), delFromInvent(Item), asserta(isArmorEquip)).
 
 equipArmor(Item) :-
     isArmorEquip, Item < 55,
     X is Item mod 9,
     job(Y),
-    ((Y == swordman, X =\= 4; Y == archer, X =\= 5; Y == sorcerer, X=\= 6) -> write('Armor yang digunakan tidak valid, equip gagal!')
+    ((Y == swordman, X =\= 4; Y == archer, X =\= 5; Y == sorcerer, X=\= 6) -> write('Armor isnt valid, fail to equip!')
     ; retract(armor(A)), delFromInvent(Item), addToInvent(A)
     ,asserta(armor(Item))).
 
 equipAccessory(Item) :-
     \+isMilik(Item),
-    write('Anda tidak memiliki item tersebut'), nl, !, fail.
+    write('You dont have that item!'), nl, !, fail.
 
 equipAccessory(Item) :-
     \+isAccessoryEquip, Item < 55,
     X is Item mod 9,
     job(Y),
-    ((Y == swordman, X =\= 7; Y == archer, X =\= 8; Y == sorcerer, X=\= 0) -> write('Accessory yang digunakan tidak valid, equip gagal!')
+    ((Y == swordman, X =\= 7; Y == archer, X =\= 8; Y == sorcerer, X=\= 0) -> write('Accessory isnt valid, fail to equip!')
     ; asserta(accessory(Item)), delFromInvent(Item), asserta(isAccessoryEquip)).
 
 equipAccessory(Item) :-
     isAccessoryEquip, Item < 55,
     X is Item mod 9,
     job(Y),
-    ((Y == swordman, X =\= 7; Y == archer, X =\= 8; Y == sorcerer, X=\= 0) -> write('Accessory yang digunakan tidak valid, equip gagal!')
+    ((Y == swordman, X =\= 7; Y == archer, X =\= 8; Y == sorcerer, X=\= 0) -> write('Accessory isnt valid, fail to equip!')
     ; retract(accessory(A)), delFromInvent(Item),addToInvent(A)
     ,asserta(accessory(Item))).
 
 
 unequipArmor :-
     \+isArmorEquip,
-    write('Tidak ada item di slot armor!'),nl,!,fail.
+    write('No item in the armor slot!'),nl,!,fail.
 
 unequipArmor :-
-    isArmorEquip, write('Armor dilepas!'),nl,
-    armor(X), retract(armor(X)), 
+    isArmorEquip, write('Armor unequipped!'),nl,
+    armor(X), retract(armor(X)),
     milik(X,Y), addToInvent(X),
-    (milik(X,Y1), Y1 =\= Y -> write('Item dikembalikan ke inventory');write(''))
+    (milik(X,Y1), Y1 =\= Y -> write('Item is returned to your inventory');write(''))
     ,retract(isArmorEquip), nl.
 
 unequipWeapon :-
     \+isWeaponEquip,
-    write('Tidak ada item di slot weapon!'),nl,!,fail.
+    write('No item in the weapon slot!'),nl,!,fail.
 
 unequipWeapon :-
-    isWeaponEquip, write('Weapon dilepas!'), nl,
+    isWeaponEquip, write('Weapon unequipped!'), nl,
     weapon(X), retract(weapon(X)),
     milik(X,Y), addToInvent(X),
-    (milik(X,Y1), Y1 =\= Y -> write('Item dikembalikan ke inventory');write(''))
+    (milik(X,Y1), Y1 =\= Y -> write('Item is returned to your inventory');write(''))
     ,retract(isWeaponEquip),nl.
 
 unequipAccessory :-
     \+isAccessoryEquip,
-    write('Tidak ada item di slot accessory!'),nl,!,fail.
+    write('No item in the accessory slot!'),nl,!,fail.
 
 unequipAccessory :-
-    isAccessoryEquip, write('Accessory dilepas!'), nl,
+    isAccessoryEquip, write('Accessory unequipped!'), nl,
     accessory(X), retract(accessory(X)),
     milik(X,Y), addToInvent(X),
-    (milik(X,Y1), Y1 =\= Y -> write('Item dikembalikan ke inventory');write(''))
+    (milik(X,Y1), Y1 =\= Y -> write('Item is returned to your inventory');write(''))
     ,retract(isAccessoryEquip),nl.
+
+status :-
+    write('Your status:'), nl,
+    write('Job: '),job(X),
+    (X == swordman -> write('Swordman')
+    ; X == archer -> write('Archer')
+    ; write('Sorcerer')), nl,
+
+    write('Level: '), currentLevel(Y), write(Y), nl,
+    write('Health: '), nl,%currHP/MaxHP
+    write('Attack: '), currAtt(A), write(A),nl,
+    write('Defense: '), currDef(D), write(D),nl,
+    /*ini aksesnya dimana ya?*/
+    write('Exp: '), nl,
+    write('Gold: '), nl.

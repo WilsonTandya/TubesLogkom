@@ -7,7 +7,7 @@ status :- write('Your status:'), nl,
   write('Exp: '), nl,
   write('Gold: '), nl.
 
-/* 
+/*
 Todo
 1. include player
 2. write current status

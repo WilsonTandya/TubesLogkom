@@ -1,6 +1,6 @@
 
 :- include('walk.pl').
-:- include('status.pl').
+%:- include('status.pl').
 :- include('player.pl').
 :- include('map.pl').
 :- dynamic(isPlay/0).
@@ -62,7 +62,7 @@ start :-
     write('################################################################################'),nl,nl,
 
 
-    write('Game telah dimulai!'), nl.
+    write('Dont Forget to Have Fun!'), nl.
 
 help:-
     isPlay,
