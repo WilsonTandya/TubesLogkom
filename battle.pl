@@ -13,6 +13,7 @@
 :- discontiguous(run/0).
 :- discontiguous(enemyAttack/0).
 :- discontiguous(serang/2).
+:- discontiguous(serangM/1).
 :- discontiguous(attack/0).
 :- discontiguous(specialAttack/0).
 :- discontiguous(checklose/0).
@@ -38,7 +39,7 @@ currDefM(dragon,420).
 gold(goblin,10).
 gold(orc,15).
 gold(undead,20).
-golf(dragon,9001).
+gold(dragon,9001).
 exp(goblin,10).
 exp(orc,15).
 exp(undead,20).
@@ -82,7 +83,7 @@ run:-
     monster(dragon),
     write('You cannot run from a boss battle!'),nl,!.
 run :-
-    random(0,5,Result),	
+    random(0,5,Result),
 	(Result =:= 0 -> berhasilrun; gagalrun).
 
 
@@ -111,7 +112,7 @@ attack :-
     \+battle(_),
     write('You are not currently battling.'),nl,!.
 
-attack :- 
+attack :-
     monster(Monster),
     currAtt(Att),
     currDefM(Monster,Def),
@@ -126,7 +127,7 @@ attack :-
         write(' damage'),
         nl,
         !,
-        enemyAttack, 
+        enemyAttack,
         !, fail
         ;
         !, fail
@@ -140,7 +141,7 @@ attack :-
 
 enemyAttack :-
     monster(Monster),
-    currAttM(Monster, Att),    
+    currAttM(Monster, Att),
     currDef(Def),
     enemyturn(Enemyturn),
     (Enemyturn mod 3 == 0 ->
@@ -157,8 +158,8 @@ enemyAttack :-
     !,
     (\+checklose ->
         write(Monster),
-        write(' deal '), 
-        write(NewAtt), 
+        write(' deal '),
+        write(NewAtt),
         write(' damage'),
         nl,
         !, fail
@@ -222,13 +223,13 @@ specialAttack :-
     nl,
     !,
     write(' You use your special attack.'),
-    write('You deal '), 
-    write(NewAtt), 
+    write('You deal '),
+    write(NewAtt),
     write(' damage'),
     retractall(turn(_)),
     asserta(turn(0)),
-    !, 
-    \+checkvictory, 
+    !,
+    \+checkvictory,
     !, fail.
 
 levelUp(Exp) :-
@@ -280,10 +281,10 @@ checkvictory :-
         write(Monster),
         write(' is defeated.') ,nl,
         write('You gain '),
-        write(Exp), 
+        write(Exp),
         write(' exp'),nl,
         write('You gain '),
-        write(GoldMonster), 
+        write(GoldMonster),
         write(' gold coins'),nl,
         (haveQuest -> retract(goalCounter(X,Y,Z)), (Monster == goblin -> X1 is X+1, asserta(goalCounter(X1,Y,Z));
         Monster == orc -> Y1 is Y+1, asserta(goalCounter(X,Y1,Z));
@@ -293,6 +294,7 @@ checkvictory :-
         asserta(turn(0)),
         retractall(currHPM(Monster,_)),
         asserta(currHPM(Monster,BaseHealth)),
+        retractall(battle(_)),
         retractall(monster(_)),!
     ).
 
@@ -335,7 +337,7 @@ usepotion :-
     delFromInvent(55),
     NewHP is CurrentHP + AddHP,
     (NewHP > MaxHP ->
-        NewCurrentHP is MaxHP 
+        NewCurrentHP is MaxHP
         ;
         NewCurrentHP is NewHP
     ),
