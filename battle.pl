@@ -60,7 +60,8 @@ randomenemy :-
         write('Level : '), level(Monster, A), write(A), nl,
         write('Health : '), currHP(Monster, B), write(B), nl,
         write('Attack : '), currAtt(Monster, C), write(C), nl,
-        write('Defense : '), currDef(Monster, D), write(D), nl.
+        write('Defense : '), currDef(Monster, D), write(D), nl,
+        asserta(battle(1)).
 
 decide :-
     randomenemy,
@@ -114,7 +115,7 @@ attack :-
     (\+checkvictory ->
         write('You deal '),
         write(NewAtt),
-        write(' damage')
+        write(' damage'),
         nl,
         !,
         enemyAttack, 
@@ -256,11 +257,11 @@ checkvictory :-
         write('The battle is over. You defeated the ancient '),
         write(Monster),
         write('.'),
-        write('You are the chosen one. You will become the savior of this world.').
+        write('You are the chosen one. You will become the savior of this world.'),nl,
         write('Thank you for playing.'),
         quitwin
         ;
-        write('The ')
+        write('The '),
         write(Monster),
         write(' is defeated.') ,nl,
         write('You gain '),
@@ -293,10 +294,11 @@ bossbattle:-
         write('You awaken the ancient '),
         monster(Monster),
         write(Monster), nl,
-        write('Level : '), level(Monster, A), write(Y), nl,
-        write('Health : '), currHP(Monster, B), write(Z), nl,
-        write('Attack : '), currAtt(Monster, C), write(Y), nl,
-        write('Defense : '), currDef(Monster, D), write(Z), nl.
+        write('Level : '), level(Monster, A), write(A), nl,
+        write('Health : '), currHP(Monster, B), write(B), nl,
+        write('Attack : '), currAtt(Monster, C), write(C), nl,
+        write('Defense : '), currDef(Monster, D), write(D), nl,
+        asserta(battle(1)).
 
 quitwin :-
     halt.
@@ -304,7 +306,7 @@ quitwin :-
 usepotion:-
     itemCounter(potion,X),
     X is 0,
-    write('You currently don't have any potions.'), nl,
+    write('You currently do not have any potions.'), nl,
     !, fail.
 
 
@@ -312,7 +314,7 @@ usepotion :-
     job(Player),
     maxHP(Player,MaxHP),
     currHP(Player,CurrentHP),
-    item(55, potion, health, AddHP)),
+    item(55, potion, health, AddHP),
     retractall(itemCounter(potion,_)),
     delFromInvent(55),
     NewHP is CurrentHP + AddHP,
