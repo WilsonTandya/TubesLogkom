@@ -45,7 +45,7 @@ level(dragon,69).
 gold(goblin,10).
 gold(orc,15).
 gold(undead,20).
-golf(dragon,9001).
+gold(dragon,9001).
 exp(goblin,10).
 exp(orc,15).
 exp(undead,20).
