@@ -11,6 +11,7 @@
 :- discontiguous(run/0).
 :- discontiguous(enemyAttack/0).
 :- discontiguous(serang/2).
+:- discontiguous(serangM/1).
 :- discontiguous(attack/0).
 :- discontiguous(specialAttack/0).
 :- discontiguous(checklose/0).
@@ -134,7 +135,6 @@ attack :-
     !.
 
 enemyAttack :-
-    job(Player),
     monster(Monster),
     currAttM(Monster, Att),    
     currDef(Def),
@@ -228,7 +228,6 @@ specialAttack :-
     !, fail.
 
 levelUp(Exp) :-
-    job(Player),
     currExp(CurrentExp),
     NewExp is CurrentExp + Exp,
     (NewExp >= 100 ->
@@ -286,6 +285,7 @@ checkvictory :-
         asserta(turn(0)),
         retractall(currHPM(Monster,_)),
         asserta(currHPM(Monster,BaseHealth)),
+        retractall(battle(_)),
         retractall(monster(_)),!
     ).
 
