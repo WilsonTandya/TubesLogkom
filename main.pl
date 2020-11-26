@@ -1,6 +1,7 @@
 %:- include('battle.pl').
 :- include('walk.pl').
 :- include('quest.pl').
+:- include('dungeon.pl').
 :- include('player.pl').
 :- include('map.pl').
 :- dynamic(isPlay/0).
