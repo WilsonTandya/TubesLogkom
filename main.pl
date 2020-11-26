@@ -1,4 +1,4 @@
-%:- include('battle.pl').
+:- include('battle.pl').
 :- include('walk.pl').
 :- include('quest.pl').
 :- include('dungeon.pl').

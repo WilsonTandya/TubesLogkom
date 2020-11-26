@@ -78,7 +78,7 @@ run:-
     monster(dragon),
     write('You cannot run from a boss battle!'),nl,!.
 run :-
-    random(0,5,Result),	
+    random(0,5,Result),
 	(Result =:= 0 -> berhasilrun; gagalrun).
 
 
@@ -107,7 +107,7 @@ attack :-
     \+battle(_),
     write('You are not currently battling.'),nl,!.
 
-attack :- 
+attack :-
     monster(Monster),
     currAtt(Att),
     currDefM(Monster,Def),
@@ -122,7 +122,7 @@ attack :-
         write(' damage'),
         nl,
         !,
-        enemyAttack, 
+        enemyAttack,
         !, fail
         ;
         !, fail
@@ -136,7 +136,7 @@ attack :-
 
 enemyAttack :-
     monster(Monster),
-    currAttM(Monster, Att),    
+    currAttM(Monster, Att),
     currDef(Def),
     enemyturn(Enemyturn),
     (Enemyturn mod 3 == 0 ->
@@ -153,8 +153,8 @@ enemyAttack :-
     !,
     (\+checklose ->
         write(Monster),
-        write(' deal '), 
-        write(NewAtt), 
+        write(' deal '),
+        write(NewAtt),
         write(' damage'),
         nl,
         !, fail
@@ -218,13 +218,13 @@ specialAttack :-
     nl,
     !,
     write(' You use your special attack.'),
-    write('You deal '), 
-    write(NewAtt), 
+    write('You deal '),
+    write(NewAtt),
     write(' damage'),
     retractall(turn(_)),
     asserta(turn(0)),
-    !, 
-    \+checkvictory, 
+    !,
+    \+checkvictory,
     !, fail.
 
 levelUp(Exp) :-
@@ -249,7 +249,7 @@ levelUp(Exp) :-
         write(NewLevel)
         ;
         retractall(currExp(_)),
-        asserta(currExp(NewExp));
+        asserta(currExp(NewExp))
     ).
 
 checkvictory :-
@@ -276,10 +276,10 @@ checkvictory :-
         write(Monster),
         write(' is defeated.') ,nl,
         write('You gain '),
-        write(Exp), 
+        write(Exp),
         write(' exp'),nl,
         write('You gain '),
-        write(GoldMonster), 
+        write(GoldMonster),
         write(' gold coins'),nl,
         retractall(turn(_)),
         asserta(turn(0)),
@@ -328,7 +328,7 @@ usepotion :-
     delFromInvent(55),
     NewHP is CurrentHP + AddHP,
     (NewHP > MaxHP ->
-        NewCurrentHP is MaxHP 
+        NewCurrentHP is MaxHP
         ;
         NewCurrentHP is NewHP
     ),
