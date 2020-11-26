@@ -21,7 +21,7 @@ fightBoss :-
         write('You must do "dungeon." first'), nl, !.
 fightBoss :-
       write('Goodluck!'),nl,
-      bossbattle, !.
+      decideboss, !.
 
 exitDungeon :- retract(isDungeon), write('Exiting dungeon'), !.
 

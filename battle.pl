@@ -48,7 +48,7 @@ initBattle :-
     asserta(currHPM(goblin,100)),
     asserta(currHPM(orc,150)),
     asserta(currHPM(undead,200)),
-    asserta(curHPM(dragon,4200)),
+    asserta(currHPM(dragon,4200)),
     asserta(level(goblin,1)),
     asserta(level(orc,1)),
     asserta(level(undead,1)),
@@ -253,10 +253,10 @@ levelUp(Exp) :-
         asserta(level(undead,NewLevel)),
         FinalExp is NewExp mod 100,
         retractall(currExp(_)),
-        asserta(currExp(FinalExp)),
-        write('Congratulations, you leveled up!'),
+        asserta(currExp(FinalExp)),nl,
+        write('Congratulations, you leveled up!'),nl,
         write('You are now level '),
-        write(NewLevel)
+        write(NewLevel),nl,nl
         ;
         retractall(currExp(_)),
         asserta(currExp(NewExp))
@@ -272,11 +272,11 @@ checkvictory :-
     gold(Monster, GoldMonster),
     Health =< 0,
     (id(Monster,4) ->
-        write('The battle is over. You defeated the ancient '),
+        write('The battle is over. You defeated the ancient '),nl,
         write(Monster),
         write('.'),
         write('You are the chosen one. You will become the savior of this world.'),nl,
-        write('Thank you for playing.'),
+        write('Thank you for playing.'),nl,
         quitwin
         ;
         write('The '),
@@ -313,17 +313,18 @@ checklose :-
 
 bossbattle:-
     repeat,
-        id(Monster, 4),
         retractall(monster(_)),
-        asserta(monster(Monster)), !,
-        write('You awaken the ancient '),
-        monster(Monster),
-        write(Monster), nl,
-        write('Level : '), level(Monster, A), write(A), nl,
-        write('Health : '), currHPM(Monster, B), write(B), nl,
-        write('Attack : '), currAttM(Monster, C), write(C), nl,
-        write('Defense : '), currDefM(Monster, D), write(D), nl,
+        asserta(monster(dragon)), !,
+        write('You awaken the ancient dragon.'),nl,
+        write('Level : '), level(dragon, A), write(A), nl,
+        write('Health : '), currHPM(dragon, B), write(B), nl,
+        write('Attack : '), currAttM(dragon, C), write(C), nl,
+        write('Defense : '), currDefM(dragon, D), write(D), nl,
         asserta(battle(1)).
+
+decideboss :-
+    bossbattle,
+    write('What will you do?'), nl.
 
 quitwin :-
     halt.
