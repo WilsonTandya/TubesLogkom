@@ -335,7 +335,7 @@ status :-
     ; write('Sorcerer')), nl,
 
     write('Level: '), currentLevel(Y), write(Y), nl,
-    write('Health: '), nl,%currHP/MaxHP
+    write('Health: '), nl,%currHP/maxHP(X)
     write('Attack: '), currAtt(A), write(A),nl,
     write('Defense: '), currDef(D), write(D),nl,
     /*ini aksesnya dimana ya?*/
