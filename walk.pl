@@ -11,14 +11,18 @@ w :-
   write('You must exitShop. first!'), nl, !.
 
 w :-
+  monster(_),
+  write('You have an ongoing battle!'), nl, !.
+
+w :-
   isPlay, player(_, Y),
   Y =:= 1,
-  write('You cant move north! there is an obstacle infront of you'), nl, !.
+  write('You cant move north! there is an obstacle in front of you'), nl, !.
 
 w :-
   isPlay, player(X, Y), obstacle(X, Z),
   Y-1 =:= Z,
-  write('You cant move north! there is an obstacle infront of you'), nl, !.
+  write('You cant move north! there is an obstacle in front of you'), nl, !.
 
 w :-
   isPlay, retract(player(X,Y)),
@@ -39,6 +43,10 @@ a :-
 a :-
   isShop,
   write('You must exitShop. first!'), nl, !.
+
+a :-
+  monster(_),
+  write('You have an ongoing battle!'), nl, !.
 
 a :-
   isPlay, player(X, _),
@@ -71,6 +79,10 @@ s :-
   write('You must exitShop. first!'), nl, !.
 
 s :-
+  monster(_),
+  write('You have an ongoing battle!'), nl, !.
+
+s :-
   isPlay, player(_, Y),
   Y =:= 15,
   write('You cant move south! there is an obstacle behind you'), nl, !.
@@ -99,6 +111,10 @@ d :-
 d :-
   isShop,
   write('You must exitShop. first!'), nl, !.
+
+d :-
+  monster(_),
+  write('You have an ongoing battle!'), nl, !.
 
 d :-
   isPlay, player(X, _),
