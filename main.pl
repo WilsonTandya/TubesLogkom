@@ -1,10 +1,9 @@
-:- include('battle.pl').
+%:- include('battle.pl').
 :- include('walk.pl').
-%:- include('status.pl').
+:- include('quest.pl').
 :- include('player.pl').
 :- include('map.pl').
 :- dynamic(isPlay/0).
-
 start :-
     \+(isPlay),
     spawnMilik,
@@ -57,8 +56,9 @@ start :-
     write('# 7.  a           : Move 1 Step to the West                                    #'),nl,
     write('# 8.  s           : Move 1 Step to the South                                   #'),nl,
     write('# 9.  d           : Move 1 Step to the East                                    #'),nl,
-    write('# 10. help        : Shows help menu                                            #'),nl,
-    write('# 11. quit        : Quit                                                       #'),nl,
+    write('# 10. help        : Shows Help Menu                                            #'),nl,
+    write('# 11. questInfo   : Shows Quest Information                                    #'),nl,
+    write('# 12. quit        : Quit                                                       #'),nl,
     write('################################################################################'),nl,nl,
 
 
@@ -79,7 +79,8 @@ help:-
     write('# 8.  s           : Move 1 Step to the South                                   #'),nl,
     write('# 9.  d           : Move 1 Step to the East                                    #'),nl,
     write('# 10. help        : Shows help menu                                            #'),nl,
-    write('# 11. quit        : Quit                                                       #'),nl,
+    write('# 11. questInfo   : Shows Quest Information                                    #'),nl,
+    write('# 12. quit        : Quit                                                       #'),nl,
     write('################################################################################'),nl,nl.
 quit:-
     isPlay,
