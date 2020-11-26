@@ -1,7 +1,3 @@
-:- include('player.pl').
-:- include('item.pl').
-:- include('shop.pl').
-
 :- dynamic(battle/1).
 :- dynamic(monster/1).
 :- dynamic(sAttack/1).
@@ -54,17 +50,17 @@ exp(undead,20).
 
 randomenemy :-
     repeat,
-        random(1, 3, Nomer),
+        random(1, 4, Nomer),
         id(Monster, Nomer),
         retractall(monster(_)),
         asserta(monster(Monster)), !,
         write('You found a '),
         monster(Monster),
         write(Monster), nl,
-        write('Level : '), level(Monster, A), write(Y), nl,
-        write('Health : '), currHP(Monster, B), write(Z), nl,
-        write('Attack : '), currAtt(Monster, C), write(Y), nl,
-        write('Defense : '), currDef(Monster, D), write(Z), nl.
+        write('Level : '), level(Monster, A), write(A), nl,
+        write('Health : '), currHP(Monster, B), write(B), nl,
+        write('Attack : '), currAtt(Monster, C), write(C), nl,
+        write('Defense : '), currDef(Monster, D), write(D), nl.
 
 decide :-
     randomenemy,

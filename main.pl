@@ -1,4 +1,4 @@
-
+:- include('battle.pl').
 :- include('walk.pl').
 %:- include('status.pl').
 :- include('player.pl').
