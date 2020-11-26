@@ -257,6 +257,7 @@ levelUp(Exp) :-
         asserta(currExp(NewExp))
     ).
 
+
 checkvictory :-
     monster(Monster),
     currHPM(Monster, Health),
@@ -264,10 +265,6 @@ checkvictory :-
     exp(Monster, Exp),
     currGold(GoldPlayer),
     gold(Monster, GoldMonster),
-    NewGold is GoldPlayer + GoldMonster,
-    retractall(currGold(_)),
-    asserta(currGold(NewGold)),
-    levelUp(Exp),
     Health =< 0,
     (id(Monster,4) ->
         write('The battle is over. You defeated the ancient '),
@@ -286,6 +283,10 @@ checkvictory :-
         write('You gain '),
         write(GoldMonster),
         write(' gold coins'),nl,
+        levelUp(Exp),
+        NewGold is GoldPlayer + GoldMonster,
+        retractall(currGold(_)),
+        asserta(currGold(NewGold)),
         (haveQuest -> retract(goalCounter(X,Y,Z)), (Monster == goblin -> X1 is X+1, asserta(goalCounter(X1,Y,Z));
         Monster == orc -> Y1 is Y+1, asserta(goalCounter(X,Y1,Z));
         Z1 is Z+1, asserta(goalCounter(X,Y,Z1))), goalCounter(A,B,C), goalQuest(D,E,F,_,_), (A >= D, B >= E, C>= F -> questDone;showQuest)
