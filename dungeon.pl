@@ -6,8 +6,8 @@ dungeon :-
 
  dungeon :-
     isPlay, player(X, Y),
-    (X =:= 13, Y =:= 13 -> !, asserta(isDungeon),
-    write('Welcome to the DUNGEON'),nl,
+    (X =:= 13, Y =:= 13 -> !, asserta(isDungeon),nl,
+    write('== WELCOME TO THE DUNGEON =='),nl,
     write('Once you fight the boss, you cant run or escape the dungeon'),nl,
     write('type "fightBoss." again if you are ready to fight the boss'),nl,
     write('type "exitDungeon." to exit the dungeon'),nl

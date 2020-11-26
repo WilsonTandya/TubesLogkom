@@ -9,6 +9,12 @@ w :-
 w :-
   isShop,
   write('You must exitShop. first!'), nl, !.
+w :-
+    isQuest,
+    write('You must exitQuest. first!'), nl, !.
+w :-
+  isDungeon,
+  write('You must exitDungeon. first!'), nl, !.
 
 w :-
   monster(_),
@@ -43,7 +49,12 @@ a :-
 a :-
   isShop,
   write('You must exitShop. first!'), nl, !.
-
+a :-
+      isQuest,
+      write('You must exitQuest. first!'), nl, !.
+a :-
+    isDungeon,
+    write('You must exitDungeon. first!'), nl, !.
 a :-
   monster(_),
   write('You have an ongoing battle!'), nl, !.
@@ -77,7 +88,12 @@ s :-
 s :-
   isShop,
   write('You must exitShop. first!'), nl, !.
-
+s :-
+      isQuest,
+      write('You must exitQuest. first!'), nl, !.
+s :-
+    isDungeon,
+    write('You must exitDungeon. first!'), nl, !.
 s :-
   monster(_),
   write('You have an ongoing battle!'), nl, !.
@@ -111,7 +127,12 @@ d :-
 d :-
   isShop,
   write('You must exitShop. first!'), nl, !.
-
+d :-
+      isQuest,
+      write('You must exitQuest. first!'), nl, !.
+ d :-
+    isDungeon,
+    write('You must exitDungeon. first!'), nl, !.
 d :-
   monster(_),
   write('You have an ongoing battle!'), nl, !.
