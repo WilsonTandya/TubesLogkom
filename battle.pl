@@ -76,7 +76,7 @@ decide :-
     asserta(pilih(1)).
 
 run:-
-	\+playing(_),
+	\+isPlay,
 	write('This command can only be used after the game starts.'), nl,
 	write('use "start." to start the game.'), nl, !.
 run:-
@@ -89,6 +89,10 @@ run :-
 
 berhasilrun :-
     write('You successfully fled.'), nl,
+    monster(Monster),
+    baseHPM(Monster,BaseHP),
+    retractall(currHPM(Monster,_)),
+    asserta(currHPM(Monster,BaseHP)),
     retractall(gagalRun(_)),
     retractall(sAttack(_)),
     retractall(battle(_)),
@@ -331,10 +335,10 @@ usepotion:-
 
 
 usepotion :-
+    \+isPlay,
     maxHP(MaxHP),
     currHP(CurrentHP),
     item(55, potion, health, AddHP),
-    retractall(itemCounter(potion,_)),
     delFromInvent(55),
     NewHP is CurrentHP + AddHP,
     (NewHP > MaxHP ->
