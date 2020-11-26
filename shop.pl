@@ -10,7 +10,7 @@ shop :-
   isPlay, player(X, Y),
   (X =:= 12, Y =:= 4 -> !, asserta(isShop),
   write('What do you want to buy? Type "gacha." or "potion."'), nl,
-  write('1. Gacha (500 gold)'), nl,
+  write('1. Gacha (200 gold)'), nl,
   write('2. Potion (100 gold)'), nl
   ; !, write('You must go to the shop first!'), nl).
 
@@ -47,13 +47,10 @@ potion :-
   \+isShop,
   write('You must go to the shop first!'), nl, !.
 
-exitShop :- retract(isShop), write('Thanks for coming.'), !.
+exitShop :-
+  \+isShop,
+  write('Exit from what?!, Youre not even in the shop!'), nl, !.
 
-/*
-Todo
-1. probabilitas
-2. ngecek di map apakah lagi posisi di shop
-3. ngecek uang cukup
-4. ngecek inventory cukup
-5. masuk ke inventory
-*/
+exitShop :- 
+  isShop,
+  retract(isShop), write('Thanks for coming.'), !.
