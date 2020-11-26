@@ -1,6 +1,5 @@
-%:- include('battle.pl').
+:- include('battle.pl').
 :- include('walk.pl').
-:- include('quest.pl').
 :- include('dungeon.pl').
 :- include('player.pl').
 :- include('map.pl').
@@ -11,7 +10,7 @@ start :-
     spawnItem,
     playerInit,
     asserta(player(3,2)),
-    asserta(isPlay),!.
+    asserta(isPlay),initBattle,!.
 
 start :-
     isPlay,

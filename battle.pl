@@ -1,3 +1,4 @@
+:- include('quest.pl').
 :- dynamic(battle/1).
 :- dynamic(monster/1).
 :- dynamic(sAttack/1).
@@ -5,7 +6,8 @@
 :- dynamic(pilih/1).
 :- dynamic(turn/1).
 :- dynamic(enemyturn/1).
-
+:- dynamic(currHPM/2).
+:- dynamic(level/2).
 :- discontiguous(levelUp/1).
 :- discontiguous(decide/0).
 :- discontiguous(run/0).
@@ -16,15 +18,11 @@
 :- discontiguous(checklose/0).
 :- discontiguous(checkvictory/0).
 
-turn(0).
+
 id(goblin,1).
 id(orc,2).
 id(undead,3).
 id(dragon,4).
-currHPM(goblin,100).
-currHPM(orc,150).
-currHPM(undead,200).
-currHPM(dragon,4200).
 baseHPM(goblin,100).
 baseHPM(orc,150).
 baseHPM(undead,200).
@@ -37,10 +35,6 @@ currDefM(goblin,5).
 currDefM(orc,10).
 currDefM(undead,15).
 currDefM(dragon,420).
-level(goblin,1).
-level(orc,1).
-level(undead,1).
-level(dragon,69).
 gold(goblin,10).
 gold(orc,15).
 gold(undead,20).
@@ -49,6 +43,17 @@ exp(goblin,10).
 exp(orc,15).
 exp(undead,20).
 exp(dragon,0).
+
+initBattle :-
+    asserta(currHPM(goblin,100)),
+    asserta(currHPM(orc,150)),
+    asserta(currHPM(undead,200)),
+    asserta(curHPM(dragon,4200)),
+    asserta(level(goblin,1)),
+    asserta(level(orc,1)),
+    asserta(level(undead,1)),
+    asserta(level(dragon,69)),
+    asserta(turn(0)), asserta(enemyturn(0)).
 
 randomenemy :-
     repeat,
@@ -134,7 +139,6 @@ attack :-
     !.
 
 enemyAttack :-
-    job(Player),
     monster(Monster),
     currAttM(Monster, Att),    
     currDef(Def),
@@ -228,7 +232,6 @@ specialAttack :-
     !, fail.
 
 levelUp(Exp) :-
-    job(Player),
     currExp(CurrentExp),
     NewExp is CurrentExp + Exp,
     (NewExp >= 100 ->
@@ -250,7 +253,7 @@ levelUp(Exp) :-
         write(NewLevel)
         ;
         retractall(currExp(_)),
-        asserta(currExp(NewExp));
+        asserta(currExp(NewExp))
     ).
 
 checkvictory :-
@@ -282,6 +285,10 @@ checkvictory :-
         write('You gain '),
         write(GoldMonster), 
         write(' gold coins'),nl,
+        (haveQuest -> retract(goalCounter(X,Y,Z)), (Monster == goblin -> X1 is X+1, asserta(goalCounter(X1,Y,Z));
+        Monster == orc -> Y1 is Y+1, asserta(goalCounter(X,Y1,Z));
+        Z1 is Z+1, asserta(goalCounter(X,Y,Z1))), goalCounter(A,B,C), goalQuest(D,E,F,_,_), (A >= D, B >= E, C>= F -> questDone;showQuest)
+        ;write('')),
         retractall(turn(_)),
         asserta(turn(0)),
         retractall(currHPM(Monster,_)),

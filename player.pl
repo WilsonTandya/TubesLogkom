@@ -14,6 +14,8 @@ kecuali keluar dan restart game*/
 :- dynamic(accessory/1).
 :- dynamic(currLevel/1).
 :- dynamic(currGold/1).
+:- dynamic(currHP/1).
+:- dynamic(currExp/1).
 
 :- discontiguous(isMilik/1).
 :- discontiguous(addToInvent/1).
@@ -24,7 +26,6 @@ kecuali keluar dan restart game*/
 isJob(swordman).
 isJob(archer).
 isJob(sorcerer).
-currExp(0).
 
 maxHP(X) :-
     \+isAccessoryEquip,
@@ -101,6 +102,8 @@ choose(X) :-
     asserta(job(X)),
     asserta(jobIsSelected),
     asserta(currLevel(1)),
+    maxHP(Z), asserta(currHP(Z)),
+    asserta(currExp(0)),
     starterPack,!.
 /* Jika pilihan bukan dari 3 yang disediakan, perintah gagal*/
 choose(_) :-
