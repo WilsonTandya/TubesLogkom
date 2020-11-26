@@ -13,6 +13,7 @@ kecuali keluar dan restart game*/
 :- dynamic(armor/1).
 :- dynamic(accessory/1).
 :- dynamic(currentLevel/1).
+:- dynamic(currGold/1).
 
 :- discontiguous(isMilik/1).
 :- discontiguous(addToInvent/1).
@@ -138,6 +139,7 @@ starterPack :-
     \+(isStarterPack),
     retractall(milik(55,_)),
     asserta(milik(55,3)),
+    asserta(currGold(100)),
     job(X),
     (X == swordman -> retractall(milik(1,_)), retractall(milik(4,_)), retractall(milik(7,_))
     ,asserta(milik(1,1)), asserta(milik(4,1)),asserta(milik(7,1))
@@ -338,4 +340,4 @@ status :-
     write('Defense: '), currDef(D), write(D),nl,
     /*ini aksesnya dimana ya?*/
     write('Exp: '), nl,
-    write('Gold: '), nl.
+    write('Gold: '), currGold(X),write(X),nl.
