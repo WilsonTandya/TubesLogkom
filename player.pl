@@ -136,7 +136,7 @@ playerInit :-
     statInit(swordman),nl,
     statInit(archer),nl,
     statInit(sorcerer), !, nl,
-    write('Please choose your job by typing "choose(swordman).", "choose(archer).", or choose("sorcerer").').
+    write('Please choose your job by typing "choose(swordman).", "choose(archer).", or "choose(sorcerer)."').
 
 /*kalau belum dikasih starter pack, boleh dikasih*/
 starterPack :-

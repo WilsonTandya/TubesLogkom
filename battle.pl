@@ -53,7 +53,7 @@ initBattle :-
     asserta(level(orc,1)),
     asserta(level(undead,1)),
     asserta(level(dragon,69)),
-    asserta(turn(0)), asserta(enemyturn(0)).
+    asserta(turn(0)), asserta(enemyturn(1)).
 
 randomenemy :-
     repeat,
@@ -98,7 +98,7 @@ berhasilrun :-
     retractall(turn(_)),
     asserta(turn(0)),
     retractall(enemyturn(_)),
-    asserta(enemyturn(0)),
+    asserta(enemyturn(1)),
     !, fail.
 
 gagalrun :-
@@ -144,7 +144,7 @@ enemyAttack :-
     currAttM(Monster, Att),
     currDef(Def),
     enemyturn(Enemyturn),
-    (Enemyturn mod 3 == 0 ->
+    (Enemyturn mod 3 =:= 0 ->
         SAtt is Att * 2
         ;
         SAtt is Att
@@ -206,13 +206,13 @@ specialAttack :-
 
 specialAttack :-
     turn(Turn),
-    Turn < 3,
+    Turn < 2,
     write('You can only use special attack once every 3 turns.'), nl,
     !, fail.
 
 specialAttack :-
     turn(Turn),
-    Turn > 2,
+    Turn > 1,
     monster(Monster),
     currDefM(Monster,Def),
     currAtt(Att),
@@ -221,16 +221,21 @@ specialAttack :-
     NewAtt is X,
     serang(Monster, NewAtt),
     nl,
-    !,
-    write(' You use your special attack.'),
-    write('You deal '),
-    write(NewAtt),
-    write(' damage'),
     retractall(turn(_)),
     asserta(turn(0)),
+    write('You use your special attack.'),nl,
     !,
-    \+checkvictory,
-    !, fail.
+    (\+checkvictory ->
+        write('You deal '),
+        write(NewAtt),
+        write(' damage'),nl,
+        !,
+        enemyAttack,
+        !
+        ;
+        !
+    ),
+    !.
 
 levelUp(Exp) :-
     currExp(CurrentExp),
@@ -330,8 +335,7 @@ usepotion:-
     !, fail.
 
 
-usepotion :-
-    \+isPlay,
+usehealthpotion :-
     maxHP(MaxHP),
     currHP(CurrentHP),
     item(55, potion, health, AddHP),
