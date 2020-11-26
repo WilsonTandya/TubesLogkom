@@ -230,7 +230,7 @@ equip(Item) :-
     item(Item,_,_,_), Item  =\= 55,
     X is Item mod 9,
     (X >= 1 , X =< 3 -> equipWeapon(Item);
-    X > 3, X =< 7 -> equipArmor(Item);
+    X > 3, X < 7 -> equipArmor(Item);
     equipAccessory(Item)),!.
 
 equip(Item) :-
