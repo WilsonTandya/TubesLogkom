@@ -232,7 +232,7 @@ levelUp(Exp) :-
     currExp(CurrentExp),
     NewExp is CurrentExp + Exp,
     (NewExp >= 100 ->
-        level(Player,CurrentLevel),
+        currLevel(CurrentLevel),
         NewLevel is CurrentLevel + (NewExp // 100),
         retractall(currLevel(_)),
         asserta(currLevel(NewLevel)),
