@@ -58,7 +58,7 @@ questDone :-
     write('Congratulation your quest is completed!'), nl, write('You receive '), write(Exp),
     write(' EXP and '), write(Gold), write(' Gold!'),
     retract(haveQuest),
-    retract(currGold(X)), Z is X + Gold;
+    retract(currGold(X)), Z is X + Gold,
     asserta(currGold(Z)),
     levelUp(Exp).
 
