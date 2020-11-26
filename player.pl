@@ -332,6 +332,15 @@ unequipAccessory :-
     ,retract(isAccessoryEquip),nl.
 
 status :-
+  \+isPlay,
+  write('You must start the game first!'), nl, !.
+
+status :-
+  \+jobIsSelected,
+  write('You must choose your job first!'), nl, !.
+
+status :-
+    isPlay, jobIsSelected,
     write('Your status:'), nl,
     write('Job: '),job(X),
     (X == swordman -> write('Swordman')
@@ -339,9 +348,9 @@ status :-
     ; write('Sorcerer')), nl,
 
     write('Level: '), currLevel(Y), write(Y), nl,
-    write('Health: '), nl,%currHP/maxHP(X)
+    write('Health: '), currHP(CHp), maxHP(MHp), 
+    write(CHp), write('/'), write(MHp), nl,
     write('Attack: '), currAtt(A), write(A),nl,
     write('Defense: '), currDef(D), write(D),nl,
-    /*ini aksesnya dimana ya?*/
-    write('Exp: '), nl,
-    write('Gold: '), currGold(X),write(X),nl.
+    write('Exp: '), currExp(Xp), write(Xp), write('/100'), nl,
+    write('Gold: '), currGold(Gold), write(Gold), nl.
