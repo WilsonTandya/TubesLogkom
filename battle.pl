@@ -3,7 +3,6 @@
 :- dynamic(monster/1).
 :- dynamic(sAttack/1).
 :- dynamic(gagalRun/1).
-:- dynamic(pilih/1).
 :- dynamic(turn/1).
 :- dynamic(enemyturn/1).
 :- dynamic(currHPM/2).
@@ -72,8 +71,7 @@ randomenemy :-
 
 decide :-
     randomenemy,
-    write('What will you do?'), nl,
-    asserta(pilih(1)).
+    write('What will you do?'), nl.
 
 run:-
 	\+isPlay,
@@ -101,7 +99,6 @@ berhasilrun :-
     asserta(turn(0)),
     retractall(enemyturn(_)),
     asserta(enemyturn(0)),
-    retract(pilih(1)),
     !, fail.
 
 gagalrun :-
@@ -124,6 +121,10 @@ attack :-
     NewAtt is X,
     serang(Monster,NewAtt),
     nl,
+    turn(Turn),
+    NewTurn is Turn + 1,
+    retractall(turn(_)),
+    asserta(turn(NewTurn)),
     !,
     (\+checkvictory ->
         write('You deal '),
@@ -132,15 +133,10 @@ attack :-
         nl,
         !,
         enemyAttack,
-        !, fail
+        !
         ;
-        !, fail
+        !
     ),
-    retract(pilih(1)),
-    turn(Turn),
-    NewTurn is Turn + 1,
-    retractall(turn(_)),
-    asserta(turn(NewTurn)),
     !.
 
 enemyAttack :-
