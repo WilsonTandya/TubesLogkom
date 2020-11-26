@@ -25,22 +25,22 @@ id(goblin,1).
 id(orc,2).
 id(undead,3).
 id(dragon,4).
-currentHP(goblin,100).
-currentHP(orc,150).
-currentHP(undead,200).
-currentHP(dragon,4200).
+currHP(goblin,100).
+currHP(orc,150).
+currHP(undead,200).
+currHP(dragon,4200).
 baseHP(goblin,100).
 baseHP(orc,150).
 baseHP(undead,200).
 baseHP(dragon,4200).
-currentAtt(goblin,20).
-currentAtt(orc,25).
-currentAtt(undead,30).
-currentAtt(dragon,690).
-currentDef(goblin,5).
-currentDef(orc,10).
-currentDef(undead,15).
-currentDef(dragon,420).
+currAtt(goblin,20).
+currAtt(orc,25).
+currAtt(undead,30).
+currAtt(dragon,690).
+currDef(goblin,5).
+currDef(orc,10).
+currDef(undead,15).
+currDef(dragon,420).
 level(goblin,1).
 level(orc,1).
 level(undead,1).
@@ -48,7 +48,9 @@ level(dragon,69).
 gold(goblin,10).
 gold(orc,15).
 gold(undead,20).
-gold(dragon,69000).
+exp(goblin,10).
+exp(orc,15).
+exp(undead,20).
 
 randomenemy :-
     repeat,
@@ -60,9 +62,9 @@ randomenemy :-
         monster(Monster),
         write(Monster), nl,
         write('Level : '), level(Monster, A), write(Y), nl,
-        write('Health : '), currentHP(Monster, B), write(Z), nl,
-        write('Attack : '), currentAtt(Monster, C), write(Y), nl,
-        write('Defense : '), currentDef(Monster, D), write(Z), nl.
+        write('Health : '), currHP(Monster, B), write(Z), nl,
+        write('Attack : '), currAtt(Monster, C), write(Y), nl,
+        write('Defense : '), currDef(Monster, D), write(Z), nl.
 
 decide :-
     randomenemy,
@@ -106,8 +108,8 @@ attack :-
 attack :- 
     job(Player),
     monster(Monster),
-    currentAtt(Player,Att),
-    currentDef(Monster,Def),
+    currAtt(Player,Att),
+    currDef(Monster,Def),
     calculate(Att,Def,X),
     NewAtt is X,
     serang(Monster,NewAtt),
@@ -134,8 +136,8 @@ attack :-
 enemyAttack :-
     job(Player),
     monster(Monster),
-    currentAtt(Monster, Att),    
-    currentDef(Player, Def),
+    currAtt(Monster, Att),    
+    currDef(Player, Def),
     enemyturn(Enemyturn),
     (Enemyturn mod 3 == 0 ->
         SAtt is Att * 2
@@ -162,15 +164,15 @@ enemyAttack :-
     !.
 
 serang(T, Att) :-
-    currentHP(T, HP),
+    currHP(T, HP),
     NewHP is HP - Att,
     (NewHP =< 0 ->
         FinalHP is 0
         ;
         FinalHP is NewHP
     ),
-    retractall(currentHP(T, HP)),
-    asserta(currentHP(T, FinalHP)).
+    retractall(currHP(T, HP)),
+    asserta(currHP(T, FinalHP)).
 
 calculate(Att,Def,X) :-
     NewAtt is Att - Def,
@@ -197,8 +199,8 @@ specialAttack :-
     turn(Turn),
     Turn > 2,
     monster(Monster),
-    currentDef(Monster,Def),
-    currentAtt(Player,Att),
+    currDef(Monster,Def),
+    currAtt(Player,Att),
     SAtt is Att * 2,
     calculate(SAtt, Def, X),
     NewAtt is X,
@@ -244,10 +246,14 @@ levelUp(Player,Exp) :-
 checkvictory :-
     job(Player),
     monster(Monster),
-    currentHP(Monster, Health),
+    currHP(Monster, Health),
     baseHP(Monster,BaseHealth),
     exp(Monster, Exp),
-    gold(Monster, Gold),
+    gold(Player, GoldPlayer),
+    gold(Monster, GoldMonster),
+    NewGold is GoldPlayer + GoldMonster,
+    retractall(gold(Player,_)),
+    asserta(gold(Player,NewGold)),
     levelUp(Player,Exp),
     Health =< 0,
     (id(Monster,4) ->
@@ -264,17 +270,20 @@ checkvictory :-
         write('You gain '),
         write(Exp), 
         write(' exp'),nl,
+        write('You gain '),
+        write(GoldMonster), 
+        write(' gold coins'),nl,
         retractall(turn(_)),
         asserta(turn(0)),
-        retractall(currentHP(Monster,_)),
-        asserta(currentHP(Monster,BaseHealth)),
+        retractall(currHP(Monster,_)),
+        asserta(currHP(Monster,BaseHealth)),
         retractall(monster(_)),!
         
     ).
 
 checklose :-
     job(Player),
-    currentHP(Player, Health),
+    currHP(Player, Health),
     Health =< 0,
     write('You died!'),nl,
     write('GAME OVER'),nl,
@@ -289,9 +298,9 @@ bossbattle:-
         monster(Monster),
         write(Monster), nl,
         write('Level : '), level(Monster, A), write(Y), nl,
-        write('Health : '), currentHP(Monster, B), write(Z), nl,
-        write('Attack : '), currentAtt(Monster, C), write(Y), nl,
-        write('Defense : '), currentDef(Monster, D), write(Z), nl.
+        write('Health : '), currHP(Monster, B), write(Z), nl,
+        write('Attack : '), currAtt(Monster, C), write(Y), nl,
+        write('Defense : '), currDef(Monster, D), write(Z), nl.
 
 quitwin :-
     halt.
@@ -306,7 +315,7 @@ usepotion:-
 usepotion :-
     job(Player),
     maxHP(Player,MaxHP),
-    currentHP(Player,CurrentHP),
+    currHP(Player,CurrentHP),
     item(55, potion, health, AddHP)),
     retractall(itemCounter(potion,_)),
     delFromInvent(55),
@@ -316,8 +325,8 @@ usepotion :-
         ;
         NewCurrentHP is NewHP
     ),
-    retractall(currentHP(Player,_)),
-    asserta(currentHP(Player,NewCurrentHP)),
+    retractall(currHP(Player,_)),
+    asserta(currHP(Player,NewCurrentHP)),
     turn(Turn),
     NewTurn is Turn + 1,
     retractall(turn(_)),
