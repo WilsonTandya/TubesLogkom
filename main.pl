@@ -11,9 +11,11 @@ start :-
     playerInit,
     asserta(player(3,2)),
     asserta(isPlay),initBattle,!.
-
 start :-
-    isPlay,
+    \+jobIsSelected,
+    write('Choose your job first!'),!.
+start :-
+    isPlay, jobIsSelected,
     write(' /$$      /$$           /$$                                                     /$$              '),nl,
     write('| $$  /$ | $$          | $$                                                    | $$              '),nl,
     write('| $$ /$$$| $$  /$$$$$$ | $$  /$$$$$$$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$        /$$$$$$    /$$$$$$ '),nl,
@@ -49,20 +51,21 @@ start :-
     write('#                                                                              #'),nl,
     write('# 1.  start       : Start the Game                                             #'),nl,
     write('# 2.  shop        : Opens Shop                                                 #'),nl,
-    write('# 3.  map         : Opens Map                                                  #'),nl,
-    write('# 4.  status      : Shows Player Status                                        #'),nl,
-    write('# 5.  inventory   : Shows Player Inventory                                     #'),nl,
-    write('# 6.  w           : Move 1 Step to the North                                   #'),nl,
-    write('# 7.  a           : Move 1 Step to the West                                    #'),nl,
-    write('# 8.  s           : Move 1 Step to the South                                   #'),nl,
-    write('# 9.  d           : Move 1 Step to the East                                    #'),nl,
-    write('# 10. help        : Shows Help Menu                                            #'),nl,
-    write('# 11. questInfo   : Shows Quest Information                                    #'),nl,
-    write('# 12. quit        : Quit                                                       #'),nl,
+    write('# 3.  quest       : Opens Quest                                                #'),nl,
+    write('# 4.  dungeon     : Opens Dungeon                                              #'),nl,
+    write('# 5.  map         : Opens Map                                                  #'),nl,
+    write('# 6.  status      : Shows Player Status                                        #'),nl,
+    write('# 7.  inventory   : Shows Player Inventory                                     #'),nl,
+    write('# 8.  w           : Move 1 Step to the North                                   #'),nl,
+    write('# 9.  a           : Move 1 Step to the West                                    #'),nl,
+    write('# 10. s           : Move 1 Step to the South                                   #'),nl,
+    write('# 11. d           : Move 1 Step to the East                                    #'),nl,
+    write('# 12. help        : Shows Help Menu                                            #'),nl,
+    write('# 13. quit        : Quit                                                       #'),nl,
     write('################################################################################'),nl,nl,
 
 
-    write('Dont Forget to Have Fun!'), nl.
+    write('Goodluck! Dont Forget to Have Fun!'), nl, !.
 
 help:-
     isPlay,
@@ -71,17 +74,25 @@ help:-
     write('#                                                                              #'),nl,
     write('# 1.  start       : Start the Game                                             #'),nl,
     write('# 2.  shop        : Opens Shop                                                 #'),nl,
-    write('# 3.  map         : Opens Map                                                  #'),nl,
-    write('# 4.  status      : Shows Player Status                                        #'),nl,
-    write('# 5.  inventory   : Shows Player Inventory                                     #'),nl,
-    write('# 6.  w           : Move 1 Step to the North                                   #'),nl,
-    write('# 7.  a           : Move 1 Step to the West                                    #'),nl,
-    write('# 8.  s           : Move 1 Step to the South                                   #'),nl,
-    write('# 9.  d           : Move 1 Step to the East                                    #'),nl,
-    write('# 10. help        : Shows help menu                                            #'),nl,
-    write('# 11. questInfo   : Shows Quest Information                                    #'),nl,
-    write('# 12. quit        : Quit                                                       #'),nl,
-    write('################################################################################'),nl,nl.
+    write('# 3.  quest       : Opens Quest                                                #'),nl,
+    write('# 4.  dungeon     : Opens Dungeon                                              #'),nl,
+    write('# 5.  map         : Opens Map                                                  #'),nl,
+    write('# 6.  status      : Shows Player Status                                        #'),nl,
+    write('# 7.  inventory   : Shows Player Inventory                                     #'),nl,
+    write('# 8.  w           : Move 1 Step to the North                                   #'),nl,
+    write('# 9.  a           : Move 1 Step to the West                                    #'),nl,
+    write('# 10. s           : Move 1 Step to the South                                   #'),nl,
+    write('# 11. d           : Move 1 Step to the East                                    #'),nl,
+    write('# 12. help        : Shows Help Menu                                            #'),nl,
+    write('# 13. quit        : Quit                                                       #'),nl,
+    write('################################################################################'),nl,nl, !.
+help:-
+    \+isPlay,
+    write('You must start the game first!'), nl, !.
+
 quit:-
     isPlay,
     halt.
+quit:-
+    \+isPlay,
+    write('You must start the game first!'), nl, !.
