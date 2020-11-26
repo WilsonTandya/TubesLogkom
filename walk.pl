@@ -55,6 +55,7 @@ a :-
 	NewX is X - 1,
 	write('You move west'), nl,
 	asserta(player(NewX, Y)),
+  random(1,3, Enemy), (Enemy =:= 1 -> decide),
 	!.
 
 s :-
@@ -84,6 +85,7 @@ s :-
 	NewY is Y + 1,
 	write('You move south'), nl,
 	asserta(player(X, NewY)),
+  random(1,3, Enemy), (Enemy =:= 1 -> decide),
 	!.
 
 d :-
@@ -113,4 +115,5 @@ d :-
 	NewX is X + 1,
 	write('You move east'), nl,
 	asserta(player(NewX, Y)),
+  random(1,3, Enemy), (Enemy =:= 1 -> decide),
 	!.
