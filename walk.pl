@@ -25,6 +25,7 @@ w :-
 	NewY is Y - 1,
 	write('You move north'), nl,
 	asserta(player(X, NewY)),
+  random(1,3, Enemy), (Enemy =:= 1 -> decide),
 	!.
 
 a :-
