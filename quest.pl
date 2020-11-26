@@ -21,7 +21,8 @@ quest :-
     write('Welcome to the quest station'),nl,
     write('You can do : '),nl,
     write('"questInfo." to see quest information'),nl,
-    write('"takeQuest." to take quest'), nl
+    write('"takeQuest." to take quest'), nl,
+    write('"exitQuest." to leave the quest station'), nl
     ; !, write('You must go to the quest first!'), nl).
 
 takeQuest :-
@@ -41,6 +42,7 @@ takeQuest :-
       ; 10 < X, X < 16 -> !, write('Your quest : kill 8 Goblin, 4 Orc, 3 Undead (200Exp, 150 Gold)'), nl
       ; 15 < X -> !, write('Your quest : kill 10 Goblin, 6 Orc, 4 Undead (300Exp, 210 Gold)'), nl).
 
+exitQuest :- retract(isQuest), write('Exiting quest'), !.
+
 /* Quest klo kelar harus hapus haveQuest*/
 /* tambahin sistem quest dan ngitung udah bunuh berapanya*/
-/* exitQuest buat ilangin isQuest nya */
