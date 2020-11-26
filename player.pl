@@ -12,7 +12,7 @@ kecuali keluar dan restart game*/
 :- dynamic(weapon/1).
 :- dynamic(armor/1).
 :- dynamic(accessory/1).
-:- dynamic(currentLevel/1).
+:- dynamic(currLevel/1).
 :- dynamic(currGold/1).
 
 :- discontiguous(isMilik/1).
@@ -24,15 +24,16 @@ kecuali keluar dan restart game*/
 isJob(swordman).
 isJob(archer).
 isJob(sorcerer).
+currExp(0).
 
 maxHP(X) :-
     \+isAccessoryEquip,
-    currentLevel(Y),
+    currLevel(Y),
     job(Z),
     baseHP(Z,X,Y),!.
 
 maxHP(X) :-
-    currentLevel(Y),
+    currLevel(Y),
     job(Z),
     baseHP(Z,A,Y),
     accessory(K),
@@ -41,12 +42,12 @@ maxHP(X) :-
 
 currAtt(X) :-
     \+isWeaponEquip,
-    currentLevel(Y),
+    currLevel(Y),
     job(Z),
     baseAtt(Z,X,Y),!.
 
 currAtt(X) :-
-    currentLevel(Y),
+    currLevel(Y),
     job(Z),
     baseAtt(Z,A,Y),
     weapon(K),
@@ -55,12 +56,12 @@ currAtt(X) :-
 
 currDef(X) :-
     \+isArmorEquip,
-    currentLevel(Y),
+    currLevel(Y),
     job(Z),
     baseDef(Z,X,Y),!.
 
 currDef(X) :-
-    currentLevel(Y),
+    currLevel(Y),
     job(Z),
     baseDef(Z,A,Y),
     armor(K),
@@ -99,7 +100,7 @@ choose(X) :-
     ; write('Sorcerer!')), nl,
     asserta(job(X)),
     asserta(jobIsSelected),
-    asserta(currentLevel(1)),
+    asserta(currLevel(1)),
     starterPack,!.
 /* Jika pilihan bukan dari 3 yang disediakan, perintah gagal*/
 choose(_) :-
@@ -334,7 +335,7 @@ status :-
     ; X == archer -> write('Archer')
     ; write('Sorcerer')), nl,
 
-    write('Level: '), currentLevel(Y), write(Y), nl,
+    write('Level: '), currLevel(Y), write(Y), nl,
     write('Health: '), nl,%currHP/maxHP(X)
     write('Attack: '), currAtt(A), write(A),nl,
     write('Defense: '), currDef(D), write(D),nl,
