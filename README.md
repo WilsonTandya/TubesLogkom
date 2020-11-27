@@ -21,7 +21,7 @@ Is it true that his parents are dead? Or is it just a conspiracy? Help him find 
 ### Program ini dibuat menggunakan GNU Prolog.
 ### Untuk menggunakan program ini silahkan jalankan main.pl lalu gunakan rule start, command "start.". Setelah itu akan diberi petunjuk command-command apa yang dapat digunakan untuk melanjutkan permainan. Buat console menjadi fullscreen untuk mendapat pengalaman bermain yang maksimal.
 <br />
-### Isi Folder :
+Isi Folder : <br />
 battle.pl <br />
 dungeon.pl <br />
 item.pl <br />
