@@ -61,7 +61,11 @@ start :-
     write('# 10. s           : Move 1 Step to the South                                   #'),nl,
     write('# 11. d           : Move 1 Step to the East                                    #'),nl,
     write('# 12. help        : Shows Help Menu                                            #'),nl,
-    write('# 13. quit        : Quit                                                       #'),nl,
+    write('# 13. *save        : Save Your Progress                                        #'),nl,
+    write('# 14. *loads       : Loads Your Progress                                       #'),nl,
+    write('# 15. quit        : Quit                                                       #'),nl,
+    write('#                                                                              #'),nl,
+    write('# pengunaan command bertanda * dapat dilihat pada laporan                      #'),nl,
     write('################################################################################'),nl,nl,
 
 
@@ -84,7 +88,11 @@ help:-
     write('# 10. s           : Move 1 Step to the South                                   #'),nl,
     write('# 11. d           : Move 1 Step to the East                                    #'),nl,
     write('# 12. help        : Shows Help Menu                                            #'),nl,
-    write('# 13. quit        : Quit                                                       #'),nl,
+    write('# 13. *save        : Save Your Progress                                        #'),nl,
+    write('# 14. *loads       : Loads Your Progress                                       #'),nl,
+    write('# 15. quit        : Quit                                                       #'),nl,
+    write('#                                                                              #'),nl,
+    write('# pengunaan command bertanda * dapat dilihat pada laporan                      #'),nl,
     write('################################################################################'),nl,nl, !.
 help:-
     \+isPlay,
@@ -98,7 +106,7 @@ save(_) :-
     \+jobIsSelected,
     write('You must choose your job first!'), nl, !.
 
-save(_) :- 
+save(_) :-
     battle(1),
     write('You cannot save the game while in battle mode!'), nl, !.
 
