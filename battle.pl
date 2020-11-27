@@ -7,6 +7,8 @@
 :- dynamic(enemyturn/1).
 :- dynamic(currHPM/2).
 :- dynamic(level/2).
+:- dynamic(useAtt/0).
+:- dynamic(useDef/0).
 :- discontiguous(levelUp/1).
 :- discontiguous(decide/0).
 :- discontiguous(run/0).
@@ -43,6 +45,13 @@ exp(goblin,10).
 exp(orc,15).
 exp(undead,20).
 exp(dragon,0).
+smove(swordman,'Fury Stomp').
+smove(archer,'Holy Arrow').
+smove(sorcerer,'Arcane Bolt').
+smove(goblin,'Poison Spear').
+smove(orc,'Boulder Throw').
+smove(undead,'Soul Strike').
+smove(dragon,'Fire Breath').
 
 initBattle :-
     asserta(currHPM(goblin,100)),
@@ -125,12 +134,13 @@ attack :-
     NewTurn is Turn + 1,
     retractall(turn(_)),
     asserta(turn(NewTurn)),
+    write('You attack'),nl,
     !,
     (\+checkvictory ->
         write('You deal '),
         write(NewAtt),
         write(' damage'),
-        nl,
+        nl,nl,
         !,
         enemyAttack,
         !
@@ -141,13 +151,21 @@ attack :-
 
 enemyAttack :-
     monster(Monster),
+    smove(Monster,Smove),
     currAttM(Monster, Att),
     currDef(Def),
     enemyturn(Enemyturn),
     (Enemyturn mod 3 =:= 0 ->
-        SAtt is Att * 2
+        SAtt is Att * 2,
+        write('The '),
+        write(Monster),
+        write(' use '),
+        write(Smove),nl
         ;
-        SAtt is Att
+        SAtt is Att,
+        write('The '),
+        write(Monster),
+        write(' attacks'),nl
     ),
     calculate(SAtt, Def, X),
     NewAtt is X,
@@ -155,8 +173,10 @@ enemyAttack :-
     NewEnemyturn is Enemyturn + 1,
     retractall(enemyturn(_)),
     asserta(enemyturn(NewEnemyturn)),
+    
     !,
     (\+checklose ->
+        write('The '),
         write(Monster),
         write(' deal '),
         write(NewAtt),
@@ -211,6 +231,8 @@ specialAttack :-
     !, fail.
 
 specialAttack :-
+    job(Player),
+    smove(Player,Smove),
     turn(Turn),
     Turn > 1,
     monster(Monster),
@@ -223,12 +245,13 @@ specialAttack :-
     nl,
     retractall(turn(_)),
     asserta(turn(0)),
-    write('You use your special attack.'),nl,
+    write('You use '),
+    write(Smove),nl,
     !,
     (\+checkvictory ->
         write('You deal '),
         write(NewAtt),
-        write(' damage'),nl,
+        write(' damage'),nl,nl,
         !,
         enemyAttack,
         !
@@ -288,6 +311,28 @@ checkvictory :-
         write('You gain '),
         write(GoldMonster),
         write(' gold coins'),nl,
+        (useAtt ->
+            currAtt(Att),
+            NewAtt is Att * 5 / 6,
+            retractall(currAtt(_)),
+            asserta(currAtt(NewAtt))
+            ;
+            currAtt(Att),
+            NewAtt is Att,
+            retractall(currAtt(_)),
+            asserta(currAtt(NewAtt))
+        ),
+        (useDef ->
+            currDef(Def),
+            NewDef is Def * 5 / 6,
+            retractall(currDef(_)),
+            asserta(currDef(NewDef))
+            ;
+            currDef(Def),
+            NewDef is Def,
+            retractall(currDef(_)),
+            asserta(currDef(NewDef))
+        ),
         levelUp(Exp),
         NewGold is GoldPlayer + GoldMonster,
         retractall(currGold(_)),
@@ -301,6 +346,8 @@ checkvictory :-
         retractall(currHPM(Monster,_)),
         asserta(currHPM(Monster,BaseHealth)),
         retractall(battle(_)),
+        retractall(useAtt),
+        retractall(useDef),
         retractall(monster(_)),!
     ).
 
@@ -336,10 +383,10 @@ usepotion:-
     !, fail.
 
 
-usehealthpotion :-
+usepotion(Usepotion) :-
     maxHP(MaxHP),
     currHP(CurrentHP),
-    item(55, potion, health, AddHP),
+    item(55,Usepotion,health,AddHP),
     delFromInvent(55),
     NewHP is CurrentHP + AddHP,
     (NewHP > MaxHP ->
@@ -353,5 +400,65 @@ usehealthpotion :-
     NewTurn is Turn + 1,
     retractall(turn(_)),
     asserta(turn(NewTurn)),
+    enemyAttack,
+    !.
+usepotion(Usepotion) :-
+    item(56,Usepotion,exp,Addexp),
+    delFromInvent(56),
+    levelUp(Addexp),
+    turn(Turn),
+    NewTurn is Turn + 1,
+    retractall(turn(_)),
+    asserta(turn(NewTurn)),
+    enemyAttack,
+    !.
+usepotion(Usepotion) :-
+    \+battle(_),
+    item(57,Usepotion,att,0),
+    write('Att Potion can only be used in battle.'),nl,!.
+usepotion(Usepotion) :-
+    \+battle(_),
+    item(58,Usepotion,def,0),
+    write('Def Potion can only be used in battle.'),nl,!.
+usepotion(Usepotion) :-
+    battle(_),
+    item(57,Usepotion,att,0),
+    useAtt,
+    write('Att Potion can only be used once per battle.'),nl,!.
+usepotion(Usepotion) :-
+    battle(_),
+    item(58,Usepotion,def,0),
+    useDef,
+    write('Def Potion can only be used once per battle.'),nl,!.
+usepotion(Usepotion) :-
+    battle(_),
+    \+useAtt,
+    currAtt(CurrentAtt),
+    asserta(realAtt(CurrentAtt)),
+    item(57,Usepotion,att,0),
+    delFromInvent(57),
+    NewAtt is CurrentAtt * 6 / 5 ,
+    retractall(currAtt(_)),
+    asserta(currAtt(NewAtt)),
+    turn(Turn),
+    NewTurn is Turn + 1,
+    retractall(turn(_)),
+    asserta(turn(NewTurn)),
+    enemyAttack,
+    !.
+usepotion(Usepotion) :-
+    \+useDef,
+    currDef(CurrentDef),
+    asserta(realDef(CurrentDef)),
+    item(58,Usepotion,def,0),
+    delFromInvent(58),
+    NewDef is CurrentDef * 6 / 5 ,
+    retractall(currDef(_)),
+    asserta(currDef(NewDef)),
+    turn(Turn),
+    NewTurn is Turn + 1,
+    retractall(turn(_)),
+    asserta(turn(NewTurn)),
+    asserta(useAtt),
     enemyAttack,
     !.

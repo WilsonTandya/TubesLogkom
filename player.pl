@@ -15,6 +15,8 @@ kecuali keluar dan restart game*/
 :- dynamic(currLevel/1).
 :- dynamic(currGold/1).
 :- dynamic(currHP/1).
+:- dynamic(currAtt/1).
+:- dynamic(currDef/1).
 :- dynamic(currExp/1).
 
 :- discontiguous(isMilik/1).

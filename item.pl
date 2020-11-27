@@ -64,8 +64,12 @@ spawn_item :-
     asserta(item(52, ring, ultimate, 400)),
     asserta(item(53, bracelet, ultimate, 400)),
     asserta(item(54, pendant, ultimate, 400)),
-    asserta(item(55, potion, health, 100)).
-
+    asserta(item(55, healthpotion, health, 100)).
+/*
+    asserta(item(56, exppotion, exp, 25)).
+    asserta(item(57, attpotion, att, 0)).
+    asserta(item(58, defpotion, def, 0)).
+*/
 /*spawnMilik digunakan untuk inisiasi kepunyaan player, semuanya 0 pada awalnya, parameter pertama merupakan
 ID item, parameter kedua banyaknya item*/
 spawnMilik :-
@@ -123,4 +127,7 @@ spawnMilik :-
     asserta(milik(52, 0)),
     asserta(milik(53, 0)),
     asserta(milik(54, 0)),
-    asserta(milik(55, 0)).
+    asserta(milik(55, 0)),
+    asserta(milik(56, 0)),
+    asserta(milik(57, 0)),
+    asserta(milik(58, 0)).
