@@ -15,7 +15,7 @@ This child has extraordinary abilities. He was a child who was good at hunting a
 But every night, sadness always came to him because he had never seen the faces of his parents who died right after his birth.
 The cause of their death was kept secret by his grandfather.
 <br />
-is it true that his/er parent died? or is it just a conspiracy? help him/er to find the answer!
+Is it true that his parents are dead? Or is it just a conspiracy? help him learn the truth!
 
 
 ### Program ini dibuat menggunakan GNU Prolog.
