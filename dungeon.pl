@@ -23,6 +23,6 @@ fightBoss :-
       write('Goodluck!'),nl,
       decideboss, !.
 
-exitDungeon :- retract(isDungeon), write('Exiting dungeon'), !.
+exitDungeon :- retract(isDungeon), write('Exiting dungeon...'), !.
 
 /* Test bossbattle nya masih error pas dijalanin*/
