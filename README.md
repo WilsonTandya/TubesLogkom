@@ -10,11 +10,11 @@ Anggota Kelompok:
 </ul>
 <br />
 Once upon a time when the forest was still lush, the river was still clear, and the air was still clean. 
-There lived a child with his grandfather in a small village called Kusuma Bangsa Village. <br />
+There lived a child with his grandfather in a small village called Kusuma Bangsa Village. <br /><br />
 This child has extraordinary abilities. He was a child who was good at hunting and fighting for his young age.
 But every night, sadness always came to him because he had never seen the faces of his parents who died right after his birth.
 The cause of their death was kept secret by his grandfather.
-<br />
+<br /><br />
 Is it true that his parents are dead? Or is it just a conspiracy? Help him find out the truth!
 
 
@@ -25,5 +25,5 @@ Is it true that his parents are dead? Or is it just a conspiracy? Help him find 
 Program telah di uji di lingkungan 
 <ol>
   <li> Windows 10 </li>
-  <li> Ubuntu 20.4 LTS </li>
+  <li> Ubuntu 18.4 LTS </li>
 </ol>
