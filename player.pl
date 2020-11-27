@@ -45,7 +45,13 @@ currAtt(X) :-
     \+isWeaponEquip,
     currLevel(Y),
     job(Z),
-    baseAtt(Z,X,Y),!.
+    baseAtt(Z,A,Y),
+    (useAtt ->
+        X is round(A * 6 / 5)
+        ;
+        X is A
+    ),
+    !.
 
 currAtt(X) :-
     currLevel(Y),
@@ -53,13 +59,23 @@ currAtt(X) :-
     baseAtt(Z,A,Y),
     weapon(K),
     item(K,_,_,L),
-    X is L + A.
+    (useAtt ->
+        X is round((L + A) * 6 / 5)
+        ;
+        X is L + A
+    ).
 
 currDef(X) :-
     \+isArmorEquip,
     currLevel(Y),
     job(Z),
-    baseDef(Z,X,Y),!.
+    baseDef(Z,A,Y),
+    (useDef ->
+        X is round(A * 6 / 5)
+        ;
+        X is A
+    ),
+    !.
 
 currDef(X) :-
     currLevel(Y),
@@ -67,7 +83,11 @@ currDef(X) :-
     baseDef(Z,A,Y),
     armor(K),
     item(K,_,_,L),
-    X is L + A.
+    (useDef ->
+        X is round((L + A) * 6 / 5)
+        ;
+        X is L + A
+    ).
 
 /*base status untuk tiap job*/
 baseHP(X,Y,Level) :-

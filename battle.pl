@@ -1,7 +1,6 @@
 :- include('quest.pl').
 :- dynamic(battle/1).
 :- dynamic(monster/1).
-:- dynamic(sAttack/1).
 :- dynamic(gagalRun/1).
 :- dynamic(turn/1).
 :- dynamic(enemyturn/1).
@@ -101,7 +100,8 @@ berhasilrun :-
     retractall(currHPM(Monster,_)),
     asserta(currHPM(Monster,BaseHP)),
     retractall(gagalRun(_)),
-    retractall(sAttack(_)),
+    retractall(useAtt),
+    retractall(useDef),
     retractall(battle(_)),
     retractall(monster(_)),
     retractall(turn(_)),
@@ -311,28 +311,6 @@ checkvictory :-
         write('You gain '),
         write(GoldMonster),
         write(' gold coins'),nl,
-        (useAtt ->
-            currAtt(Att),
-            NewAtt is Att * 5 / 6,
-            retractall(currAtt(_)),
-            asserta(currAtt(NewAtt))
-            ;
-            currAtt(Att),
-            NewAtt is Att,
-            retractall(currAtt(_)),
-            asserta(currAtt(NewAtt))
-        ),
-        (useDef ->
-            currDef(Def),
-            NewDef is Def * 5 / 6,
-            retractall(currDef(_)),
-            asserta(currDef(NewDef))
-            ;
-            currDef(Def),
-            NewDef is Def,
-            retractall(currDef(_)),
-            asserta(currDef(NewDef))
-        ),
         levelUp(Exp),
         NewGold is GoldPlayer + GoldMonster,
         retractall(currGold(_)),
@@ -376,18 +354,27 @@ decideboss :-
 quitwin :-
     halt.
 
-usepotion:-
-    itemCounter(potion,X),
+usepotion(Id):-
+    item(Id,potion,_,_),
+    itemCounter(Id,X),
     X is 0,
-    write('You currently do not have any potions.'), nl,
+    write('You currently do not have this potion.'), nl,
     !, fail.
 
-
-usepotion(Usepotion) :-
+usepotion(Id) :-
     maxHP(MaxHP),
     currHP(CurrentHP),
-    item(55,Usepotion,health,AddHP),
-    delFromInvent(55),
+    item(Id,potion,health,_),
+    0 is MaxHP - CurrentHP,
+    write('You are already at full health!'),nl,
+    !.
+
+usepotion(Id) :-
+    maxHP(MaxHP),
+    currHP(CurrentHP),
+    item(Id,potion,health,AddHP),
+    delFromInvent(Id),
+    write('You use Health Potion.'),nl,nl,
     NewHP is CurrentHP + AddHP,
     (NewHP > MaxHP ->
         NewCurrentHP is MaxHP
@@ -402,9 +389,10 @@ usepotion(Usepotion) :-
     asserta(turn(NewTurn)),
     enemyAttack,
     !.
-usepotion(Usepotion) :-
-    item(56,Usepotion,exp,Addexp),
-    delFromInvent(56),
+usepotion(Id) :-
+    item(Id,potion,xp,Addexp),
+    delFromInvent(Id),
+    write('You use XP Potion.'),nl,nl,
     levelUp(Addexp),
     turn(Turn),
     NewTurn is Turn + 1,
@@ -412,53 +400,46 @@ usepotion(Usepotion) :-
     asserta(turn(NewTurn)),
     enemyAttack,
     !.
-usepotion(Usepotion) :-
+usepotion(Id) :-
     \+battle(_),
-    item(57,Usepotion,att,0),
+    item(Id,potion,strength,0),
     write('Att Potion can only be used in battle.'),nl,!.
-usepotion(Usepotion) :-
+usepotion(Id) :-
     \+battle(_),
-    item(58,Usepotion,def,0),
+    item(Id,potion,resistance,0),
     write('Def Potion can only be used in battle.'),nl,!.
-usepotion(Usepotion) :-
+usepotion(Id) :-
     battle(_),
-    item(57,Usepotion,att,0),
+    item(Id,potion,strength,0),
     useAtt,
     write('Att Potion can only be used once per battle.'),nl,!.
-usepotion(Usepotion) :-
+usepotion(Id) :-
     battle(_),
-    item(58,Usepotion,def,0),
+    item(Id,potion,resistance,0),
     useDef,
     write('Def Potion can only be used once per battle.'),nl,!.
-usepotion(Usepotion) :-
+usepotion(Id) :-
     battle(_),
     \+useAtt,
-    currAtt(CurrentAtt),
-    asserta(realAtt(CurrentAtt)),
-    item(57,Usepotion,att,0),
-    delFromInvent(57),
-    NewAtt is CurrentAtt * 6 / 5 ,
-    retractall(currAtt(_)),
-    asserta(currAtt(NewAtt)),
-    turn(Turn),
-    NewTurn is Turn + 1,
-    retractall(turn(_)),
-    asserta(turn(NewTurn)),
-    enemyAttack,
-    !.
-usepotion(Usepotion) :-
-    \+useDef,
-    currDef(CurrentDef),
-    asserta(realDef(CurrentDef)),
-    item(58,Usepotion,def,0),
-    delFromInvent(58),
-    NewDef is CurrentDef * 6 / 5 ,
-    retractall(currDef(_)),
-    asserta(currDef(NewDef)),
+    item(Id,potion,strength,0),
+    delFromInvent(Id),
+    write('You use Strength Potion.'),nl,nl,
     turn(Turn),
     NewTurn is Turn + 1,
     retractall(turn(_)),
     asserta(turn(NewTurn)),
     asserta(useAtt),
+    enemyAttack,
+    !.
+usepotion(Id) :-
+    \+useDef,
+    item(Id,potion,resistance,0),
+    delFromInvent(Id),
+    write('You use Resistance Potion.'),nl,nl,
+    turn(Turn),
+    NewTurn is Turn + 1,
+    retractall(turn(_)),
+    asserta(turn(NewTurn)),
+    asserta(useDef),
     enemyAttack,
     !.
