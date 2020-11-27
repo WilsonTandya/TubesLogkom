@@ -90,6 +90,90 @@ help:-
     \+isPlay,
     write('You must start the game first!'), nl, !.
 
+save(_) :-
+    \+isPlay,
+    write('You must start the game first!'),nl,!.
+
+save(_) :-
+    \+jobIsSelected,
+    write('You must choose your job first!'), nl, !.
+
+save(_) :- 
+    battle(1),
+    write('You cannot save the game while in battle mode!'), nl, !.
+
+save(File) :-
+    atom_concat('data/', File, FileName),
+    open(FileName, write, FileContent),
+    saveData(FileContent),
+    close(FileContent),
+    write('Game saved to '),
+    write(FileName), nl.
+
+saveData(_) :-
+    \+jobIsSelected,
+    write('Save failed, you must choose your job first!'), nl, !.
+
+saveData(FileContent) :-
+    write(FileContent,jobIsSelected), write(FileContent,'.'), nl(FileContent),
+    job(Job), write(FileContent,job(Job)), write(FileContent, '.'), nl(FileContent),
+    player(X,Y), write(FileContent, player(X,Y)), write(FileContent, '.'), nl(FileContent),
+    currLevel(Level), write(FileContent, currLevel(Level)), write(FileContent, '.'), nl(FileContent),
+    currHP(CurrHP), write(FileContent, currHP(CurrHP)), write(FileContent, '.'), nl(FileContent),
+    currExp(XP), write(FileContent, currExp(XP)), write(FileContent, '.'), nl(FileContent),
+    currGold(Gold), write(FileContent,currGold(Gold)), write(FileContent, '.'), nl(FileContent),
+    (isArmorEquip -> write(FileContent,isArmorEquip), write(FileContent, '.'), nl(FileContent),
+    armor(Armor), write(FileContent,armor(Armor)), write(FileContent, '.'), nl(FileContent); !),
+    (isWeaponEquip -> write(FileContent,isWeaponEquip), write(FileContent,'.'), nl(FileContent),
+    weapon(Weapon), write(FileContent,weapon(Weapon)), write(FileContent, '.'), nl(FileContent); !),
+    (isAccessoryEquip -> write(FileContent, isAccessoryEquip), write(FileContent, '.'), nl(FileContent),
+    accessory(Accessory), write(FileContent,accessory(Accessory)), write(FileContent, '.'), nl(FileContent); !),
+    (haveQuest -> write(FileContent, haveQuest), write(FileContent,'.'), nl(FileContent),
+    goalQuest(Goblin,Orc,Undead, Exp, Gld), write(FileContent, goalQuest(Goblin,Orc,Undead,Exp,Gld)), write(FileContent,'.'), nl(FileContent),
+    goalCounter(Gob,Or,Un), write(FileContent,goalCounter(Gob,Or,Un)), write(FileContent,'.'), nl(FileContent); !),
+    forall(milik(ID, Banyak), (write(FileContent,milik(ID,Banyak)), write(FileContent,'.'), nl(FileContent))).
+
+loads(_) :-
+    \+isPlay,
+    write('Try to start the game first!'), nl,!.
+
+loads(_) :-
+    \+jobIsSelected,
+    write('Try to choose job first, then you can load your game'), nl,!.
+
+loads(_) :-
+    battle(1),
+    write('You cannot load the game while in the battle mode!'), nl, !.
+
+loads(File) :-
+    atom_concat('data/', File ,FileName),
+    open(FileName, read, FileContent),
+    resetState,
+    repeat,
+    read(FileContent,In),
+    asserta(In),
+    at_end_of_stream(FileContent),
+    close(FileContent),
+    write('Game loaded!'), nl,!.
+
+loads(File) :-
+    write('File '),
+    write(File),
+    write(' no\'t found!'), nl, fail.
+
+resetState :-
+    retractall(job(_)),
+    retractall(player(_,_)),
+    retractall(currLevel(_)),
+    retractall(currHP(_)),
+    retractall(currExp(_)),
+    retractall(currGold(_)),
+    (isArmorEquip -> retractall(isArmorEquip), retractall(armor(_)); !),
+    (isWeaponEquip -> retractall(isWeaponEquip), retractall(weapon(_)); !),
+    (isAccessoryEquip -> retractall(isAccessoryEquip), retractall(accessory(_)); !),
+    (haveQuest -> retractall(haveQuest), retractall(goalQuest(_,_,_,_,_)), retractall(goalCounter(_,_,_)); !),
+    retractall(milik(_,_)).
+
 quit:-
     isPlay,
     halt.

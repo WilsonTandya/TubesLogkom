@@ -353,4 +353,4 @@ status :-
     write('Attack: '), currAtt(A), write(A),nl,
     write('Defense: '), currDef(D), write(D),nl,
     write('Exp: '), currExp(Xp), write(Xp), write('/100'), nl,
-    write('Gold: '), currGold(Gold), write(Gold), nl.
+    write('Gold: '), currGold(Gold), write(Gold), nl,!.
