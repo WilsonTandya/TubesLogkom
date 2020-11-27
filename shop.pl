@@ -7,7 +7,7 @@ shop :-
   write('You must start the game first!'), nl, !.
 
 shop :-
-  isPlay, player(X, Y), 
+  isPlay, player(X, Y),
   (\+monster(_) -> (X =:= 12, Y =:= 4 -> !, asserta(isShop),
   write('What do you want to buy? Type "gacha." or "potion."'), nl,
   write('1. Gacha (200 gold) (gacha.)'), nl,
@@ -20,7 +20,7 @@ shop :-
 
 gacha :-
   isPlay, isShop, inventCounter(Y), currGold(Gold),
-  ( Gold > 199 -> !, ( (Y+1) < 101 -> 
+  ( Gold > 199 -> !, ( (Y+1) < 101 ->
   random(1, 101, X), write('You got a '), retract(currGold(Gold)), NewGold is (Gold-200), asserta(currGold(NewGold)),
   (X < 31 -> random(55, 59, Id), !,item(Id, B, C, _), addToInvent(Id), write(C), write(' '), write(B), nl
   ; 30 < X, X < 61 -> random(10, 19, A),!, item(A, B, C, _), addToInvent(A), write(C), write(' '), write(B), nl
@@ -41,7 +41,7 @@ gacha :-
 
 potion :-
   isShop, item(55, B, C, _), inventCounter(Y), currGold(Gold),
-  (Gold > 99 -> !, 
+  (Gold > 99 -> !,
   ( (Y+1) < 101 -> !, retract(currGold(Gold)), NewGold is (Gold-100), asserta(currGold(NewGold)),
   write('You got a '), write(C), write(' '), write(B), addToInvent(55), nl
   ; !, write('Your inventory is full'), nl)
@@ -57,7 +57,7 @@ potion :-
 
 xpotion :-
   isShop, item(56, B, C, _), inventCounter(Y), currGold(Gold),
-  (Gold > 99 -> !, 
+  (Gold > 99 -> !,
   ( (Y+1) < 101 -> !, retract(currGold(Gold)), NewGold is (Gold-100), asserta(currGold(NewGold)),
   write('You got a '), write(C), write(' '), write(B), addToInvent(56), nl
   ; !, write('Your inventory is full'), nl)
@@ -73,7 +73,7 @@ xpotion :-
 
 spotion :-
   isShop, item(57, B, C, _), inventCounter(Y), currGold(Gold),
-  (Gold > 99 -> !, 
+  (Gold > 99 -> !,
   ( (Y+1) < 101 -> !, retract(currGold(Gold)), NewGold is (Gold-100), asserta(currGold(NewGold)),
   write('You got a '), write(C), write(' '), write(B), addToInvent(57), nl
   ; !, write('Your inventory is full'), nl)
@@ -89,7 +89,7 @@ spotion :-
 
 rpotion :-
   isShop, item(58, B, C, _), inventCounter(Y), currGold(Gold),
-  (Gold > 99 -> !, 
+  (Gold > 99 -> !,
   ( (Y+1) < 101 -> !, retract(currGold(Gold)), NewGold is (Gold-100), asserta(currGold(NewGold)),
   write('You got a '), write(C), write(' '), write(B), addToInvent(58), nl
   ; !, write('Your inventory is full'), nl)
@@ -107,6 +107,6 @@ exitShop :-
   \+isShop,
   write('Exit from what?!, Youre not even in the shop!'), nl, !.
 
-exitShop :- 
+exitShop :-
   isShop,
   retract(isShop), write('Thanks for coming.'), !.

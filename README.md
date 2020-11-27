@@ -1,21 +1,29 @@
-# TubesLogkom
+# Bensin Impact
 
-## Spek Tubes Logkom
-https://docs.google.com/document/d/1JDcjBHJrpvziRA3XemN6f3VS_PnY2-MEeJAfmjFqZd0/edit
+## Welcome to Bensin Impact!
+Anggota Kelompok: 
+<ul>
+  <li> Arsa Daris Gintara           13519037 </li>
+  <li> Nizamixavier Rafif Lutvie    13519085 </li>
+  <li> Widya Anugrah Putra          13519105 </li>
+  <li> Wilson Tandya                13519209 </li>
+</ul>
+<br />
+Once upon a time when the forest was still lush, the river was still clear, and the air was still clean. 
+There lived a child with his grandfather in a small village called Kusuma Bangsa Village. <br /><br />
+This child has extraordinary abilities. He was a child who was good at hunting and fighting for his young age.
+But every night, sadness always came to him because he had never seen the faces of his parents who died right after his birth.
+The cause of their death was kept secret by his grandfather.
+<br /><br />
+Is it true that his parents are dead? Or is it just a conspiracy? Help him find out the truth!
 
-## Gambaran Kasar
-https://docs.google.com/document/d/1eL9yfTXk9H2mdM5zvAeK3Drytbpco110TgdNWnlsGsU/edit
 
-## Format penamaan .zip
-IF2121_K01_G04.zip
+### Program ini dibuat menggunakan GNU Prolog.
+### Untuk menggunakan program ini silahkan jalankan main.pl lalu gunakan rule start, command (start.). Setelah itu akan diberi petunjuk command command apa yang dapat digunakan untuk melanjutkan permainan
 
-## Laporan
-https://docs.google.com/document/d/1ZbUMFj7zXgxj5PUrhKACVv1kyoxrrcljIKxqb_KSy58/edit# <br />
-
-## Timeline
-### Jumat, 27 November 2020 (23:59):
-> Seluruh deliverables dari tugas besar: <br />
-> Final= https://driveuploader.com/upload/Nw1NcaSvLh/ (Deadline 27 November 23.59) <br />
-### Jumat, 4 Desember 2020 (23:59):
-> Demo tugas besar: <br />
-> Video demo program yang sudah dibuat <br />
+<br />
+Program telah di uji di lingkungan 
+<ol>
+  <li> Windows 10 </li>
+  <li> Ubuntu 18.4 LTS </li>
+</ol>
