@@ -28,10 +28,9 @@ Program telah di uji di lingkungan
   <li> Ubuntu 18.4 LTS </li>
 </ol>
 <br />
-Versi GNU Prolog yang digunakan
-<ol>
-  GNU Prolog 1.4.5 (64 bits)<br />
-  Compiled Jul 14 2018, 12:58:46 with cl<br />
-  By Daniel Diaz<br />
-  Copyright (C) 1999-2018 Daniel Diaz<br />
- </ol>
+
+Versi GNU Prolog yang digunakan<br />
+GNU Prolog 1.4.5 (64 bits)<br />
+Compiled Jul 14 2018, 12:58:46 with cl<br />
+By Daniel Diaz<br />
+Copyright (C) 1999-2018 Daniel Diaz<br />
