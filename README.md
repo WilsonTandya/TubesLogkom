@@ -29,8 +29,10 @@ Program telah di uji di lingkungan
 </ol>
 <br />
 
-Versi GNU Prolog yang digunakan<br />
-GNU Prolog 1.4.5 (64 bits)<br />
-Compiled Jul 14 2018, 12:58:46 with cl<br />
-By Daniel Diaz<br />
-Copyright (C) 1999-2018 Daniel Diaz<br />
+Versi GNU Prolog yang digunakan
+```
+GNU Prolog 1.4.5 (64 bits)
+Compiled Jul 14 2018, 12:58:46 with cl
+By Daniel Diaz
+Copyright (C) 1999-2018 Daniel Diaz
+```
