@@ -403,21 +403,21 @@ usepotion(Id) :-
 usepotion(Id) :-
     \+battle(_),
     item(Id,potion,strength,0),
-    write('Att Potion can only be used in battle.'),nl,!.
+    write('Strength Potion can only be used in battle.'),nl,!.
 usepotion(Id) :-
     \+battle(_),
     item(Id,potion,resistance,0),
-    write('Def Potion can only be used in battle.'),nl,!.
+    write('Resistance Potion can only be used in battle.'),nl,!.
 usepotion(Id) :-
     battle(_),
     item(Id,potion,strength,0),
     useAtt,
-    write('Att Potion can only be used once per battle.'),nl,!.
+    write('Strength Potion can only be used once per battle.'),nl,!.
 usepotion(Id) :-
     battle(_),
     item(Id,potion,resistance,0),
     useDef,
-    write('Def Potion can only be used once per battle.'),nl,!.
+    write('Resistance Potion can only be used once per battle.'),nl,!.
 usepotion(Id) :-
     battle(_),
     \+useAtt,
