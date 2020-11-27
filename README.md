@@ -22,14 +22,14 @@ Is it true that his parents are dead? Or is it just a conspiracy? Help him find 
 ### Untuk menggunakan program ini silahkan jalankan main.pl lalu gunakan rule start, command "start.". Setelah itu akan diberi petunjuk command-command apa yang dapat digunakan untuk melanjutkan permainan. Buat console menjadi fullscreen untuk mendapat pengalaman bermain yang maksimal.
 
 <br />
-Program telah di uji di lingkungan 
+Program telah di uji di lingkungan :
 <ol>
   <li> Windows 10 </li>
   <li> Ubuntu 18.4 LTS </li>
 </ol>
 <br />
 
-Versi GNU Prolog yang digunakan
+Versi GNU Prolog yang digunakan:
 ```
 GNU Prolog 1.4.5 (64 bits)
 Compiled Jul 14 2018, 12:58:46 with cl
