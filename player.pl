@@ -15,8 +15,6 @@ kecuali keluar dan restart game*/
 :- dynamic(currLevel/1).
 :- dynamic(currGold/1).
 :- dynamic(currHP/1).
-:- dynamic(currAtt/1).
-:- dynamic(currDef/1).
 :- dynamic(currExp/1).
 
 :- discontiguous(isMilik/1).
@@ -169,7 +167,10 @@ showFreq([X|Y]) :- milik(X,Z), !, item(X, A,B,_),write(Z), write(' '), (
     B == enchanted -> write('Enchanted ');
     B == epic -> write('Epic ');
     B == ultimate -> write('Ultimate ');
-    B == health -> write('Health Potion')),
+    B == health -> write('Health ');
+    B == xp -> write('EXP ');
+    B == strength -> write('Strength ');
+    write('Resistence ')),
 
     (A == sword -> write('Sword');
     A == bow -> write('Bow');
@@ -179,7 +180,8 @@ showFreq([X|Y]) :- milik(X,Z), !, item(X, A,B,_),write(Z), write(' '), (
     A == robe -> write('Robe');
     A == ring -> write('Ring');
     A == bracelet -> write('Bracelet');
-    A == pendant -> write('Pendant');write(''))
+    A == pendant -> write('Pendant');
+    A == potion -> write('Potion'))
     ,write(' ID = '), write(X)
 ), nl, showFreq(Y).
 
@@ -236,7 +238,7 @@ equip(Item) :-
     equipAccessory(Item)),!.
 
 equip(Item) :-
-    Item =:= 55, write('Potion cant be equipped'),nl,!,fail.
+    Item >= 55, write('Potion cant be equipped'),nl,!,fail.
 
 equip(Item) :-
     \+isMilik(Item),
