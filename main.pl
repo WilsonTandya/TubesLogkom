@@ -6,6 +6,29 @@
 :- dynamic(isPlay/0).
 start :-
     \+(isPlay),
+    write('################################################################### STORY LINE ##################################################################'),nl,
+    write('#                                                                                                                                               #'),nl,
+    write('# Once upon a time when the forest was still lush, the river was still clear, and the air was still clean.                                      #'),nl,
+    write('# There lived a child with his grandfather in a small village called Kusuma Bangsa Village.                                                     #'),nl,
+    write('#                                                                                                                                               #'),nl,
+    write('# This child has extraordinary abilities. He was a child who was good at hunting and fighting for his young age.                                #'),nl,
+    write('# But every night, sadness always came to him because he had never seen the faces of his parents who died right after his birth.                #'),nl,
+    write('# The cause of their death was kept secret by his grandfather.                                                                                  #'),nl,
+    write('#                                                                                                                                               #'),nl,
+    write('# Long story short, the grandfather suffered from a chronic COVID-19 and the doctor said that he does not have much time left.                  #'),nl,
+    write('# Right before death, the grandfather chatted with his grandson.                                                                                #'),nl,
+    write('#                                                                                                                                               #'),nl,
+    write('# "My grandson, I have to tell you the truth."                                                                                                  #'),nl,
+    write('# "What truth grandpa?"                                                                                                                         #'),nl,
+    write('# "Your father and mother are still alive, and they are kept in a dungeon, guarded by the ancient dragon."                                      #'),nl,
+    write('# "Whaa... Whaaa.. What?! in a dungeon? by the ancient dragon?"                                                                                 #'),nl,
+    write('# "Yes my grandson. Your parents made a deal with the ancient dragon to get a baby in return the ancient dragon kept them as prisoners"         #'),nl,
+    write('# "Then how can I free my parents?"                                                                                                             #'),nl,
+    write('# "You need to go to the dungeon to beat the ancient dragon, but many people have tried and failed"                                             #'),nl,
+    write('# "I must free them!"                                                                                                                           #'),nl,
+    write('# His grandfather died. The boy decided to train everyday in order to defeat the ancient dragon and free his parents.                           #'),nl,
+    write('#                                                                                                                                               #'),nl,    
+    write('#################################################################################################################################################'),nl,
     spawnMilik,
     spawnItem,
     playerInit,
@@ -183,7 +206,7 @@ resetState :-
     retractall(milik(_,_)).
 
 quit:-
-    isPlay,
+    isPlay, write('Thanks for playing Bensin Impact'),nl,
     halt.
 quit:-
     \+isPlay,
