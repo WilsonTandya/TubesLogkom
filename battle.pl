@@ -298,7 +298,8 @@ checkvictory :-
         write('The battle is over. You defeated the ancient '),nl,
         write(Monster),
         write('.'),
-        write('You are the chosen one. You will become the savior of this world.'),nl,
+        write('You freed your parents from captivity. You are finally reunited with your parents.'),nl,
+        write('Now you can be together with your family once more.'),nl,
         write('Thank you for playing.'),nl,
         quitwin
         ;
