@@ -118,7 +118,8 @@ choose(X) :-
     write('Congratulations, You become a(n) '),
     (X == swordman -> write('Swordman!')
     ; X == archer -> write('Archer!')
-    ; write('Sorcerer!')), nl,
+    ; write('Sorcerer!')), nl,nl,
+    write('Type "start." again to start playing!'),nl,
     asserta(job(X)),
     asserta(jobIsSelected),
     asserta(currLevel(1)),
@@ -372,7 +373,7 @@ status :-
     ; write('Sorcerer')), nl,
 
     write('Level: '), currLevel(Y), write(Y), nl,
-    write('Health: '), currHP(CHp), maxHP(MHp), 
+    write('Health: '), currHP(CHp), maxHP(MHp),
     write(CHp), write('/'), write(MHp), nl,
     write('Attack: '), currAtt(A), write(A),nl,
     write('Defense: '), currDef(D), write(D),nl,
